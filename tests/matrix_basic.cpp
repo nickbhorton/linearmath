@@ -128,3 +128,19 @@ TEST(MATRIX_BASIC, non_square_mult){
     EXPECT_EQ(result.get(1,0), 24);
     EXPECT_EQ(result.get(1,1), 12);
 }
+
+TEST(MATRIX_BASIC, vec_mat_mult){
+    Matrix2i m {};
+    m.set(0, 0, 1);
+    m.set(0, 1, 2);
+    m.set(1, 0, 3);
+    m.set(1, 1, 4);
+
+    Vector2i v {};
+    v.set(0, 0, 1);
+    v.set(1, 0, 1);
+
+    Vector2i result = m * v;
+    EXPECT_EQ(result.get(0,0), 3);
+    EXPECT_EQ(result.get(1,0), 7);
+}
