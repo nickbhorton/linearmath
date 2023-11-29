@@ -73,6 +73,51 @@ Matrix<Type, RowsLHS, ColsRHS> operator*(const Matrix<Type, RowsLHS, RowsRHSCols
     return result;
 }
 
+template <typename Type, int Rows, int Cols>
+Matrix<Type, Rows, Cols> operator*(const Type lhs, const Matrix<Type, Rows, Cols>& rhs) {
+    Matrix<Type, Rows, Cols> result {};
+    for (int i = 0; i < Rows; i++){
+        for (int j = 0; j < Cols; j++){
+            result.set(i, j, lhs * rhs.get(i, j));
+        }
+    }
+    return result;
+}
+
+template <typename Type, int Rows, int Cols>
+Matrix<Type, Rows, Cols> operator*(const Matrix<Type, Rows, Cols>& lhs, const Type rhs) {
+    Matrix<Type, Rows, Cols> result {};
+    for (int i = 0; i < Rows; i++){
+        for (int j = 0; j < Cols; j++){
+            result.set(i, j, lhs.get(i, j) * rhs);
+        }
+    }
+    return result;
+}
+
+
+template <typename Type, int Rows, int Cols>
+Matrix<Type, Rows, Cols> operator+(const Matrix<Type, Rows, Cols>& lhs, const Matrix<Type, Rows, Cols>& rhs) {
+    Matrix<Type, Rows, Cols> result {};
+    for (int i = 0; i < Rows; i++){
+        for (int j = 0; j < Cols; j++){
+            result.set(i, j, lhs.get(i, j) + rhs.get(i, j));
+        }
+    }
+    return result;
+}
+
+template <typename Type, int Rows, int Cols>
+Matrix<Type, Rows, Cols> operator-(const Matrix<Type, Rows, Cols>& lhs, const Matrix<Type, Rows, Cols>& rhs) {
+    Matrix<Type, Rows, Cols> result {};
+    for (int i = 0; i < Rows; i++){
+        for (int j = 0; j < Cols; j++){
+            result.set(i, j, lhs.get(i, j) - rhs.get(i, j));
+        }
+    }
+    return result;
+}
+
 // Getters and Setters
 
 template <typename Type, int Rows, int Cols>

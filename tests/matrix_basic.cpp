@@ -106,7 +106,7 @@ TEST(MATRIX_BASIC, square_mult){
 }
 
 TEST(MATRIX_BASIC, non_square_mult){
-    Matrix<int, 2, 3> m1 {};
+    Matrix<int, 2, 3> m1 {true};
     m1.set(0, 0, 3);
     m1.set(0, 1, -9);
     m1.set(0, 2, -8);
@@ -114,7 +114,7 @@ TEST(MATRIX_BASIC, non_square_mult){
     m1.set(1, 1, 4);
     m1.set(1, 2, 3);
 
-    Matrix<int, 3, 2> m2 {};
+    Matrix<int, 3, 2> m2 {true};
     m2.set(0, 0, 7);
     m2.set(0, 1, -3);
     m2.set(1, 0, -2);
@@ -127,20 +127,92 @@ TEST(MATRIX_BASIC, non_square_mult){
     EXPECT_EQ(result.get(0,1), -52);
     EXPECT_EQ(result.get(1,0), 24);
     EXPECT_EQ(result.get(1,1), 12);
+
+    // Col Row memory order
+
+    Matrix<int, 2, 3> m1_flip {false};
+    m1_flip.set(0, 0, 3);
+    m1_flip.set(0, 1, -9);
+    m1_flip.set(0, 2, -8);
+    m1_flip.set(1, 0, 2);
+    m1_flip.set(1, 1, 4);
+    m1_flip.set(1, 2, 3);
+
+    Matrix<int, 3, 2> m2_flip {false};
+    m2_flip.set(0, 0, 7);
+    m2_flip.set(0, 1, -3);
+    m2_flip.set(1, 0, -2);
+    m2_flip.set(1, 1, 3);
+    m2_flip.set(2, 0, 6);
+    m2_flip.set(2, 1, 2);
+
+    result = m1_flip * m2_flip;
+    EXPECT_EQ(result.get(0,0), -9);
+    EXPECT_EQ(result.get(0,1), -52);
+    EXPECT_EQ(result.get(1,0), 24);
+    EXPECT_EQ(result.get(1,1), 12);
 }
 
 TEST(MATRIX_BASIC, vec_mat_mult){
-    Matrix2i m {};
+    Matrix2i m {true};
     m.set(0, 0, 1);
     m.set(0, 1, 2);
     m.set(1, 0, 3);
     m.set(1, 1, 4);
 
-    Vector2i v {};
+    Vector2i v {true};
     v.set(0, 0, 1);
     v.set(1, 0, 1);
 
     Vector2i result = m * v;
     EXPECT_EQ(result.get(0,0), 3);
     EXPECT_EQ(result.get(1,0), 7);
+}
+
+TEST(MATRIX_BASIC, mat_add){
+    Matrix2i m {true};
+    m.set(0, 0, 1);
+    m.set(0, 1, 2);
+    m.set(1, 0, 3);
+    m.set(1, 1, 4);
+
+    Matrix2i result = m + m;
+    EXPECT_EQ(result.get(0,0), 2);
+    EXPECT_EQ(result.get(0,1), 4);
+    EXPECT_EQ(result.get(1,0), 6);
+    EXPECT_EQ(result.get(1,1), 8);
+}
+
+TEST(MATRIX_BASIC, mat_sub){
+    Matrix2i m {true};
+    m.set(0, 0, 1);
+    m.set(0, 1, 2);
+    m.set(1, 0, 3);
+    m.set(1, 1, 4);
+
+    Matrix2i result = m - m;
+    EXPECT_EQ(result.get(0,0), 0);
+    EXPECT_EQ(result.get(0,1), 0);
+    EXPECT_EQ(result.get(1,0), 0);
+    EXPECT_EQ(result.get(1,1), 0);
+}
+
+TEST(MATRIX_BASIC, mat_scalar_mult){
+    Matrix2i m {true};
+    m.set(0, 0, 1);
+    m.set(0, 1, 2);
+    m.set(1, 0, 3);
+    m.set(1, 1, 4);
+
+    Matrix2i result = 2 * m;
+    EXPECT_EQ(result.get(0,0), 2);
+    EXPECT_EQ(result.get(0,1), 4);
+    EXPECT_EQ(result.get(1,0), 6);
+    EXPECT_EQ(result.get(1,1), 8);
+
+    result = m * 2;
+    EXPECT_EQ(result.get(0,0), 2);
+    EXPECT_EQ(result.get(0,1), 4);
+    EXPECT_EQ(result.get(1,0), 6);
+    EXPECT_EQ(result.get(1,1), 8);
 }
