@@ -3,7 +3,7 @@
 
 TEST(MATRIX_BASIC, identity_constructor) {
     mat2f m2x2 {};
-    m2x2 = m2x2.Identity();
+    m2x2 = m2x2.identity();
     for (int i = 0; i < m2x2.rows(); i++){
         for (int j = 0; j < m2x2.cols(); j++){
             if (i == j){
@@ -13,7 +13,7 @@ TEST(MATRIX_BASIC, identity_constructor) {
     }
 
     mat3f m3x3 {};
-    m3x3 = m3x3.Identity();
+    m3x3 = m3x3.identity();
     for (int i = 0; i < m3x3.rows(); i++){
         for (int j = 0; j < m3x3.cols(); j++){
             if (i == j){
@@ -23,7 +23,7 @@ TEST(MATRIX_BASIC, identity_constructor) {
     }
 
     Matrix<int, 301, 147> m301x147 {};
-    m301x147 = m301x147.Identity();
+    m301x147 = m301x147.identity();
     for (int i = 0; i < m301x147.rows(); i++){
         for (int j = 0; j < m301x147.cols(); j++){
             if (i == j){
@@ -33,7 +33,7 @@ TEST(MATRIX_BASIC, identity_constructor) {
     }
 
     Matrix<int, 301, 147> m301x147_col_row_ord {false};
-    m301x147_col_row_ord = m301x147_col_row_ord.Identity();
+    m301x147_col_row_ord = m301x147_col_row_ord.identity();
     for (int i = 0; i < m301x147_col_row_ord.rows(); i++){
         for (int j = 0; j < m301x147_col_row_ord.cols(); j++){
             if (i == j){
@@ -43,7 +43,7 @@ TEST(MATRIX_BASIC, identity_constructor) {
     }
 
     Matrix<int, 147, 301> m147x301 {};
-    m147x301 = m147x301.Identity();
+    m147x301 = m147x301.identity();
     for (int i = 0; i < m147x301.rows(); i++){
         for (int j = 0; j < m147x301.cols(); j++){
             if (i == j){
@@ -53,7 +53,7 @@ TEST(MATRIX_BASIC, identity_constructor) {
     }
 
     Matrix<int, 147, 301> m147x301_col_row_ord {false};
-    m147x301_col_row_ord = m147x301_col_row_ord.Identity();
+    m147x301_col_row_ord = m147x301_col_row_ord.identity();
     for (int i = 0; i < m147x301_col_row_ord.rows(); i++){
         for (int j = 0; j < m147x301_col_row_ord.cols(); j++){
             if (i == j){
@@ -293,4 +293,40 @@ TEST(MATRIX_BASIC, mat4x4_from_rvec3) {
         }
     }
     EXPECT_EQ(m.get(3, 3), 1);
+}
+
+TEST(MATRIX_BASIC, mat_ns_identity) {
+    mat4i m = mat::identity<int, 4, 4>(1);
+    for (int i = 0; i < m.rows(); i++){
+        for (int j = 0; j < m.cols(); j++){
+            if (i == j){
+                EXPECT_EQ(m.get(i, j), 1);
+            }
+            else {
+                EXPECT_EQ(m.get(i, j), 0);
+            }
+        }
+    }
+
+    m = mat::identity<int, 4, 4>(10);
+    for (int i = 0; i < m.rows(); i++){
+        for (int j = 0; j < m.cols(); j++){
+            if (i == j){
+                EXPECT_EQ(m.get(i, j), 10);
+            }
+            else {
+                EXPECT_EQ(m.get(i, j), 0);
+            }
+        }
+    }
+}
+
+TEST(MATRIX_BASIC, dot_prod) {
+    vec3i v = vec::create(1, 1, 1);
+    int result = vec::dot(v.transpose(), v);
+    EXPECT_EQ(result, 3);
+    result = vec::dot(v, v);
+    EXPECT_EQ(result, 3);
+    result = vec::dot(v.transpose(), v.transpose());
+    EXPECT_EQ(result, 3);
 }

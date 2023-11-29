@@ -14,8 +14,8 @@ class Matrix {
     Matrix<Type, Rows, Cols>();
     Matrix<Type, Rows, Cols>(bool RowColOrd);
 
-    Matrix<Type, Rows, Cols> Identity();
-    Matrix<Type, Cols, Rows> transpose();
+    Matrix<Type, Rows, Cols> identity();
+    Matrix<Type, Cols, Rows> transpose() const;
 
     void set(int row, int col, Type value);
     Type get(int row, int col) const;
@@ -48,7 +48,7 @@ inline Matrix<Type, Rows, Cols>::Matrix(bool RowColOrd) : RowColOrd{RowColOrd} {
 }
 
 template <typename Type, int Rows, int Cols>
-inline Matrix<Type, Rows, Cols> Matrix<Type, Rows, Cols>::Identity()
+inline Matrix<Type, Rows, Cols> Matrix<Type, Rows, Cols>::identity()
 {
     Matrix<Type, Rows, Cols> m {};
     for (unsigned int row = 0; row < Rows; row++){
@@ -138,7 +138,7 @@ std::ostream& operator<<(std::ostream& os, const Matrix<Type, Rows, Cols>& m){
 }
 
 template <typename Type, int Rows, int Cols>
-inline Matrix<Type, Cols, Rows> Matrix<Type, Rows, Cols>::transpose()
+inline Matrix<Type, Cols, Rows> Matrix<Type, Rows, Cols>::transpose() const
 {
     Matrix<Type, Cols, Rows> result{};
     for (int i = 0; i < Rows; i++) {
@@ -187,6 +187,36 @@ inline int Matrix<Type, Rows, Cols>::cols() const {
 // Useful functionality
 
 namespace mat{
+    template <typename Type, int Rows, int Cols>
+    inline Matrix<Type, Rows, Cols> identity()
+    {
+        Matrix<Type, Rows, Cols> m {};
+        for (unsigned int row = 0; row < Rows; row++){
+            for (unsigned int col = 0; col < Cols; col++){
+                if (row == col)
+                {
+                    m.set(row, col, 1);
+                }
+            }
+        }
+        return m;
+    }
+
+    template <typename Type, int Rows, int Cols>
+    inline Matrix<Type, Rows, Cols> identity(const Type& diag_values)
+    {
+        Matrix<Type, Rows, Cols> m {};
+        for (unsigned int row = 0; row < Rows; row++){
+            for (unsigned int col = 0; col < Cols; col++){
+                if (row == col)
+                {
+                    m.set(row, col, diag_values);
+                }
+            }
+        }
+        return m;
+    }
+
     template <typename Type>
     inline Matrix<Type, 2, 2> create(const Matrix<Type, 2, 1>& v1, const Matrix<Type, 2, 1>& v2) {
         Matrix<Type, 2, 2> m {};
@@ -304,6 +334,25 @@ namespace vec{
         v.set(2, 0, t3);
         v.set(3, 0, t4);
         return v;
+    }
+
+    template <typename Type, int Size>
+    inline Type dot(const Matrix<Type, 1, Size>& lhs, const Matrix<Type, Size, 1>& rhs)
+    {
+        auto result = lhs * rhs;
+        return result.get(0, 0);
+    }
+
+    template <typename Type, int Size>
+    inline Type dot(const Matrix<Type, 1, Size>& lhs, const Matrix<Type, 1, Size>& rhs)
+    {
+        return dot(lhs, rhs.transpose());
+    }
+
+    template <typename Type, int Size>
+    inline Type dot(const Matrix<Type, Size, 1>& lhs, const Matrix<Type, Size, 1>& rhs)
+    {
+        return dot(lhs.transpose(), rhs);
     }
 }
 
