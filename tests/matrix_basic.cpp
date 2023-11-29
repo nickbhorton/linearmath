@@ -2,7 +2,7 @@
 #include "matrix.hpp"
 
 TEST(MATRIX_BASIC, identity_constructor) {
-    Matrix2f m2x2 {};
+    mat2f m2x2 {};
     m2x2 = m2x2.Identity();
     for (int i = 0; i < m2x2.rows(); i++){
         for (int j = 0; j < m2x2.cols(); j++){
@@ -12,7 +12,7 @@ TEST(MATRIX_BASIC, identity_constructor) {
         }
     }
 
-    Matrix<int, 3, 3> m3x3 {};
+    mat3f m3x3 {};
     m3x3 = m3x3.Identity();
     for (int i = 0; i < m3x3.rows(); i++){
         for (int j = 0; j < m3x3.cols(); j++){
@@ -64,7 +64,7 @@ TEST(MATRIX_BASIC, identity_constructor) {
 }
 
 TEST(MATRIX_BASIC, memory_ordering) {
-    Matrix2i m2x2_row_col_ord {true};
+    mat2i m2x2_row_col_ord {true};
     m2x2_row_col_ord.set(0, 0, 0);
     m2x2_row_col_ord.set(0, 1, 1);
     m2x2_row_col_ord.set(1, 0, 2);
@@ -74,7 +74,7 @@ TEST(MATRIX_BASIC, memory_ordering) {
     EXPECT_EQ(m2x2_row_col_ord.get(1, 0), 2);
     EXPECT_EQ(m2x2_row_col_ord.get(1, 1), 3);
 
-    Matrix2i m2x2_col_row_ord {false};
+    mat2i m2x2_col_row_ord {false};
     m2x2_col_row_ord.set(0, 0, 0);
     m2x2_col_row_ord.set(0, 1, 1);
     m2x2_col_row_ord.set(1, 0, 2);
@@ -86,19 +86,19 @@ TEST(MATRIX_BASIC, memory_ordering) {
 }
 
 TEST(MATRIX_BASIC, square_mult){
-    Matrix2i m1 {};
+    mat2i m1 {};
     m1.set(0, 0, 1);
     m1.set(0, 1, 2);
     m1.set(1, 0, 3);
     m1.set(1, 1, 4);
 
-    Matrix2i m2 {};
+    mat2i m2 {};
     m2.set(0, 0, 1);
     m2.set(0, 1, 2);
     m2.set(1, 0, 3);
     m2.set(1, 1, 4);
 
-    Matrix2i result = m1 * m2;
+    mat2i result = m1 * m2;
     EXPECT_EQ(result.get(0,0), 7);
     EXPECT_EQ(result.get(0,1), 10);
     EXPECT_EQ(result.get(1,0), 15);
@@ -122,7 +122,7 @@ TEST(MATRIX_BASIC, non_square_mult){
     m2.set(2, 0, 6);
     m2.set(2, 1, 2);
 
-    Matrix<int, 2, 2> result = m1 * m2;
+    mat2i result = m1 * m2;
     EXPECT_EQ(result.get(0,0), -9);
     EXPECT_EQ(result.get(0,1), -52);
     EXPECT_EQ(result.get(1,0), 24);
@@ -154,29 +154,29 @@ TEST(MATRIX_BASIC, non_square_mult){
 }
 
 TEST(MATRIX_BASIC, vec_mat_mult){
-    Matrix2i m {true};
+    mat2i m {true};
     m.set(0, 0, 1);
     m.set(0, 1, 2);
     m.set(1, 0, 3);
     m.set(1, 1, 4);
 
-    Vector2i v {true};
+    vec2i v {true};
     v.set(0, 0, 1);
     v.set(1, 0, 1);
 
-    Vector2i result = m * v;
+    vec2i result = m * v;
     EXPECT_EQ(result.get(0,0), 3);
     EXPECT_EQ(result.get(1,0), 7);
 }
 
 TEST(MATRIX_BASIC, mat_add){
-    Matrix2i m {true};
+    mat2i m {true};
     m.set(0, 0, 1);
     m.set(0, 1, 2);
     m.set(1, 0, 3);
     m.set(1, 1, 4);
 
-    Matrix2i result = m + m;
+    mat2i result = m + m;
     EXPECT_EQ(result.get(0,0), 2);
     EXPECT_EQ(result.get(0,1), 4);
     EXPECT_EQ(result.get(1,0), 6);
@@ -184,13 +184,13 @@ TEST(MATRIX_BASIC, mat_add){
 }
 
 TEST(MATRIX_BASIC, mat_sub){
-    Matrix2i m {true};
+    mat2i m {true};
     m.set(0, 0, 1);
     m.set(0, 1, 2);
     m.set(1, 0, 3);
     m.set(1, 1, 4);
 
-    Matrix2i result = m - m;
+    mat2i result = m - m;
     EXPECT_EQ(result.get(0,0), 0);
     EXPECT_EQ(result.get(0,1), 0);
     EXPECT_EQ(result.get(1,0), 0);
@@ -198,13 +198,13 @@ TEST(MATRIX_BASIC, mat_sub){
 }
 
 TEST(MATRIX_BASIC, mat_scalar_mult){
-    Matrix2i m {true};
+    mat2i m {true};
     m.set(0, 0, 1);
     m.set(0, 1, 2);
     m.set(1, 0, 3);
     m.set(1, 1, 4);
 
-    Matrix2i result = 2 * m;
+    mat2i result = 2 * m;
     EXPECT_EQ(result.get(0,0), 2);
     EXPECT_EQ(result.get(0,1), 4);
     EXPECT_EQ(result.get(1,0), 6);
@@ -217,14 +217,80 @@ TEST(MATRIX_BASIC, mat_scalar_mult){
     EXPECT_EQ(result.get(1,1), 8);
 }
 
-// TEST(MATRIX_BASIC, mat_indexing){
-//     Matrix2i m {true};
-//     m.set(0, 0, 1);
-//     m.set(0, 1, 2);
-//     m.set(1, 0, 3);
-//     m.set(1, 1, 4);
+TEST(MATRIX_BASIC, mat2x2_from_cvec2) {
+    vec2i x = vec::create(1, 2);
+    vec2i y = vec::create(3, 4);
+    mat2i m = mat::create(x, y);
 
-//     Vector2i result = m[0];
-//     EXPECT_EQ(result.get(0,0), 0);
-//     EXPECT_EQ(result.get(0,1), 0);
-// }
+    for (int i = 0; i < m.rows(); i++){
+        for (int j = 0; j < m.cols(); j++){
+            EXPECT_EQ(m.get(j, i), (i * m.rows() + j) + 1);
+        }
+    }
+}
+
+TEST(MATRIX_BASIC, mat2x2_from_rvec2) {
+    rvec2i x = vec::create(1, 2).transpose();
+    rvec2i y = vec::create(3, 4).transpose();
+    mat2i m = mat::create(x, y);
+
+    for (int i = 0; i < m.rows(); i++){
+        for (int j = 0; j < m.cols(); j++){
+            EXPECT_EQ(m.get(i, j), (i * m.rows() + j) + 1);
+        }
+    }
+}
+
+TEST(MATRIX_BASIC, mat3x3_from_cvec3) {
+    vec3i x = vec::create(1, 2, 3);
+    vec3i y = vec::create(4, 5, 6);
+    vec3i z = vec::create(7, 8, 9);
+    mat3i m = mat::create(x, y, z);
+
+    for (int i = 0; i < m.rows(); i++){
+        for (int j = 0; j < m.cols(); j++){
+            EXPECT_EQ(m.get(j, i), (i * m.rows() + j) + 1);
+        }
+    }
+}
+
+TEST(MATRIX_BASIC, mat3x3_from_rvec3) {
+    rvec3i x = vec::create(1, 2, 3).transpose();
+    rvec3i y = vec::create(4, 5, 6).transpose();
+    rvec3i z = vec::create(7, 8, 9).transpose();
+    mat3i m = mat::create(x, y, z);
+
+    for (int i = 0; i < m.rows(); i++){
+        for (int j = 0; j < m.cols(); j++){
+            EXPECT_EQ(m.get(i, j), (i * m.rows() + j) + 1);
+        }
+    }
+}
+
+TEST(MATRIX_BASIC, mat4x4_from_cvec3) {
+    vec3i x = vec::create(1, 2, 3);
+    vec3i y = vec::create(4, 5, 6);
+    vec3i z = vec::create(7, 8, 9);
+    mat4i m = mat::create(x, y, z, 1);
+
+    for (int i = 0; i < m.rows() - 1; i++){
+        for (int j = 0; j < m.cols() - 1; j++){
+            EXPECT_EQ(m.get(j, i), (i * (m.rows() - 1) + j) + 1);
+        }
+    }
+    EXPECT_EQ(m.get(3, 3), 1);
+}
+
+TEST(MATRIX_BASIC, mat4x4_from_rvec3) {
+    rvec3i x = vec::create(1, 2, 3).transpose();
+    rvec3i y = vec::create(4, 5, 6).transpose();
+    rvec3i z = vec::create(7, 8, 9).transpose();
+    mat4i m = mat::create(x, y, z, 1);
+
+    for (int i = 0; i < m.rows() - 1; i++){
+        for (int j = 0; j < m.cols() - 1; j++){
+            EXPECT_EQ(m.get(i, j), (i * (m.rows() - 1) + j) + 1);
+        }
+    }
+    EXPECT_EQ(m.get(3, 3), 1);
+}
