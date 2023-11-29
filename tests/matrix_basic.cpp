@@ -62,3 +62,69 @@ TEST(MATRIX_BASIC, identity_constructor) {
         }
     }
 }
+
+TEST(MATRIX_BASIC, memory_ordering) {
+    Matrix2i m2x2_row_col_ord {true};
+    m2x2_row_col_ord.set(0, 0, 0);
+    m2x2_row_col_ord.set(0, 1, 1);
+    m2x2_row_col_ord.set(1, 0, 2);
+    m2x2_row_col_ord.set(1, 1, 3);
+    EXPECT_EQ(m2x2_row_col_ord.get(0, 0), 0);
+    EXPECT_EQ(m2x2_row_col_ord.get(0, 1), 1);
+    EXPECT_EQ(m2x2_row_col_ord.get(1, 0), 2);
+    EXPECT_EQ(m2x2_row_col_ord.get(1, 1), 3);
+
+    Matrix2i m2x2_col_row_ord {false};
+    m2x2_col_row_ord.set(0, 0, 0);
+    m2x2_col_row_ord.set(0, 1, 1);
+    m2x2_col_row_ord.set(1, 0, 2);
+    m2x2_col_row_ord.set(1, 1, 3);
+    EXPECT_EQ(m2x2_col_row_ord.get(0, 0), 0);
+    EXPECT_EQ(m2x2_col_row_ord.get(0, 1), 1);
+    EXPECT_EQ(m2x2_col_row_ord.get(1, 0), 2);
+    EXPECT_EQ(m2x2_col_row_ord.get(1, 1), 3);
+}
+
+TEST(MATRIX_BASIC, square_mult){
+    Matrix2i m1 {};
+    m1.set(0, 0, 1);
+    m1.set(0, 1, 2);
+    m1.set(1, 0, 3);
+    m1.set(1, 1, 4);
+
+    Matrix2i m2 {};
+    m2.set(0, 0, 1);
+    m2.set(0, 1, 2);
+    m2.set(1, 0, 3);
+    m2.set(1, 1, 4);
+
+    Matrix2i result = m1 * m2;
+    EXPECT_EQ(result.get(0,0), 7);
+    EXPECT_EQ(result.get(0,1), 10);
+    EXPECT_EQ(result.get(1,0), 15);
+    EXPECT_EQ(result.get(1,1), 22);
+}
+
+TEST(MATRIX_BASIC, non_square_mult){
+    Matrix<int, 2, 3> m1 {};
+    m1.set(0, 0, 3);
+    m1.set(0, 1, -9);
+    m1.set(0, 2, -8);
+    m1.set(1, 0, 2);
+    m1.set(1, 1, 4);
+    m1.set(1, 2, 3);
+
+    Matrix<int, 3, 2> m2 {};
+    m2.set(0, 0, 7);
+    m2.set(0, 1, -3);
+    m2.set(1, 0, -2);
+    m2.set(1, 1, 3);
+    m2.set(2, 0, 6);
+    m2.set(2, 1, 2);
+
+    Matrix<int, 2, 2> result = m1 * m2;
+    EXPECT_EQ(result.get(0,0), -9);
+    EXPECT_EQ(result.get(0,1), -52);
+    EXPECT_EQ(result.get(1,0), 24);
+    EXPECT_EQ(result.get(1,1), 12);
+}
