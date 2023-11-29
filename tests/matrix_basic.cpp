@@ -330,3 +330,68 @@ TEST(MATRIX_BASIC, dot_prod) {
     result = vec::dot(v.transpose(), v.transpose());
     EXPECT_EQ(result, 3);
 }
+
+//    0 1 2
+// 0 |1 2 3|
+// 1 |4 5 6|
+// 2 |7 8 9|
+TEST(MATRIX_BASIC, minor_3x3) {
+    vec3i x = vec::create(1, 2, 3);
+    vec3i y = vec::create(4, 5, 6);
+    vec3i z = vec::create(7, 8, 9);
+    mat3i m = mat::create(x, y, z).transpose();
+    mat2i m_0_0 = m.minor(0, 0);
+    mat2i m_0_1 = m.minor(0, 1);
+    mat2i m_0_2 = m.minor(0, 2);
+    mat2i m_1_0 = m.minor(1, 0);
+    mat2i m_1_1 = m.minor(1, 1);
+    mat2i m_1_2 = m.minor(1, 2);
+    mat2i m_2_0 = m.minor(2, 0);
+    mat2i m_2_1 = m.minor(2, 1);
+    mat2i m_2_2 = m.minor(2, 2);
+
+    EXPECT_EQ(m_0_0.get(0,0), 5);
+    EXPECT_EQ(m_0_0.get(0,1), 6);
+    EXPECT_EQ(m_0_0.get(1,0), 8);
+    EXPECT_EQ(m_0_0.get(1,1), 9);
+
+    EXPECT_EQ(m_0_1.get(0,0), 4);
+    EXPECT_EQ(m_0_1.get(0,1), 6);
+    EXPECT_EQ(m_0_1.get(1,0), 7);
+    EXPECT_EQ(m_0_1.get(1,1), 9);
+
+    EXPECT_EQ(m_0_2.get(0,0), 4);
+    EXPECT_EQ(m_0_2.get(0,1), 5);
+    EXPECT_EQ(m_0_2.get(1,0), 7);
+    EXPECT_EQ(m_0_2.get(1,1), 8);
+
+    EXPECT_EQ(m_1_0.get(0,0), 2);
+    EXPECT_EQ(m_1_0.get(0,1), 3);
+    EXPECT_EQ(m_1_0.get(1,0), 8);
+    EXPECT_EQ(m_1_0.get(1,1), 9);
+
+    EXPECT_EQ(m_1_1.get(0,0), 1);
+    EXPECT_EQ(m_1_1.get(0,1), 3);
+    EXPECT_EQ(m_1_1.get(1,0), 7);
+    EXPECT_EQ(m_1_1.get(1,1), 9);
+    
+    EXPECT_EQ(m_1_2.get(0,0), 1);
+    EXPECT_EQ(m_1_2.get(0,1), 2);
+    EXPECT_EQ(m_1_2.get(1,0), 7);
+    EXPECT_EQ(m_1_2.get(1,1), 8);
+
+    EXPECT_EQ(m_2_0.get(0,0), 2);
+    EXPECT_EQ(m_2_0.get(0,1), 3);
+    EXPECT_EQ(m_2_0.get(1,0), 5);
+    EXPECT_EQ(m_2_0.get(1,1), 6);
+
+    EXPECT_EQ(m_2_1.get(0,0), 1);
+    EXPECT_EQ(m_2_1.get(0,1), 3);
+    EXPECT_EQ(m_2_1.get(1,0), 4);
+    EXPECT_EQ(m_2_1.get(1,1), 6);
+
+    EXPECT_EQ(m_2_2.get(0,0), 1);
+    EXPECT_EQ(m_2_2.get(0,1), 2);
+    EXPECT_EQ(m_2_2.get(1,0), 4);
+    EXPECT_EQ(m_2_2.get(1,1), 5);
+}

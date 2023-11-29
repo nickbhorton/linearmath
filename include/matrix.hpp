@@ -14,13 +14,15 @@ class Matrix {
     Matrix<Type, Rows, Cols>();
     Matrix<Type, Rows, Cols>(bool RowColOrd);
 
-    Matrix<Type, Rows, Cols> identity();
+    Matrix<Type, Rows, Cols> identity() const;
     Matrix<Type, Cols, Rows> transpose() const;
+    Matrix<Type, Rows - 1, Cols - 1> minor(int i, int j) const;
 
     void set(int row, int col, Type value);
     Type get(int row, int col) const;
     int rows() const;
     int cols() const;
+    bool is_square() const;
 
     private:
     Type data[Rows * Cols];
@@ -45,21 +47,6 @@ inline Matrix<Type, Rows, Cols>::Matrix(bool RowColOrd) : RowColOrd{RowColOrd} {
     for (unsigned int i = 0; i < Rows * Cols; i++){
         data[i] = 0;
     }
-}
-
-template <typename Type, int Rows, int Cols>
-inline Matrix<Type, Rows, Cols> Matrix<Type, Rows, Cols>::identity()
-{
-    Matrix<Type, Rows, Cols> m {};
-    for (unsigned int row = 0; row < Rows; row++){
-        for (unsigned int col = 0; col < Cols; col++){
-            if (row == col)
-            {
-                m.set(row, col, 1);
-            }
-        }
-    }
-    return m;
 }
 
 // Operators
@@ -137,6 +124,23 @@ std::ostream& operator<<(std::ostream& os, const Matrix<Type, Rows, Cols>& m){
     return os;
 }
 
+// Functions
+
+template <typename Type, int Rows, int Cols>
+inline Matrix<Type, Rows, Cols> Matrix<Type, Rows, Cols>::identity() const
+{
+    Matrix<Type, Rows, Cols> m {};
+    for (unsigned int row = 0; row < Rows; row++){
+        for (unsigned int col = 0; col < Cols; col++){
+            if (row == col)
+            {
+                m.set(row, col, 1);
+            }
+        }
+    }
+    return m;
+}
+
 template <typename Type, int Rows, int Cols>
 inline Matrix<Type, Cols, Rows> Matrix<Type, Rows, Cols>::transpose() const
 {
@@ -146,6 +150,32 @@ inline Matrix<Type, Cols, Rows> Matrix<Type, Rows, Cols>::transpose() const
             result.set(j, i, get(i, j));
         }
     }
+    return result;
+}
+
+template <typename Type, int Rows, int Cols>
+Matrix<Type, Rows - 1, Cols - 1> Matrix<Type, Rows, Cols>::minor(int i, int j) const {
+    Matrix<Type, Rows - 1, Rows - 1> result{};
+    int major_i = 0;
+    int major_j = 0;
+    int minor_i = 0;
+    int minor_j = 0;
+    while (major_i < Rows){
+        while (major_j < Cols){
+            if (major_i != i && major_j != j){
+                result.set(minor_i, minor_j, get(major_i, major_j));
+                ++minor_j;
+            }
+            ++major_j;
+        }
+        if (major_i != i && major_j != j){
+            ++minor_i;
+        }
+        ++major_i;
+        major_j = 0;
+        minor_j = 0;
+    }
+
     return result;
 }
 
@@ -182,6 +212,11 @@ inline int Matrix<Type, Rows, Cols>::rows() const {
 template <typename Type, int Rows, int Cols>
 inline int Matrix<Type, Rows, Cols>::cols() const {
     return Cols;
+}
+
+template <typename Type, int Rows, int Cols>
+inline bool Matrix<Type, Rows, Cols>::is_square() const {
+    return Rows == Cols;
 }
 
 // Useful functionality
