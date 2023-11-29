@@ -423,8 +423,8 @@ TEST(MATRIX_BASIC, det_4x4){
 TEST(MATRIX_BASIC, cross_vec3){
     vec3i x = vec::create(1, 0, 0);
     vec3i y = vec::create(0, 1, 0);
-    vec3i z = vec::cross(x, y);
-    EXPECT_EQ(z, vec::create(0, 0, 1));
-    vec3i z_minus = vec::cross(y, x);
-    EXPECT_EQ(z_minus, vec::create(0, 0, -1));
+    EXPECT_EQ(vec::cross(x, y), vec::create(0, 0, 1));
+    EXPECT_EQ(vec::cross(y, x), vec::create(0, 0, -1));
+    EXPECT_EQ(vec::cross(x.transpose(), y.transpose()), vec::create(0, 0, 1).transpose());
+    EXPECT_EQ(vec::cross(y.transpose(), x.transpose()), vec::create(0, 0, -1).transpose());
 }

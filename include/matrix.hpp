@@ -458,6 +458,12 @@ namespace vec{
             lhs.get(0, 0) * rhs.get(1, 0) - lhs.get(1, 0) * rhs.get(0, 0)
         );
     }
+
+    template <typename Type, int Size>
+    inline Matrix<Type, 1, Size> cross(const Matrix<Type, 1, Size>& lhs, const Matrix<Type, 1, Size>& rhs)
+    {
+        return cross(lhs.transpose(), rhs.transpose()).transpose();
+    }
 }
 
 // Understandable type aliases
