@@ -216,3 +216,15 @@ TEST(MATRIX_BASIC, mat_scalar_mult){
     EXPECT_EQ(result.get(1,0), 6);
     EXPECT_EQ(result.get(1,1), 8);
 }
+
+// TEST(MATRIX_BASIC, mat_indexing){
+//     Matrix2i m {true};
+//     m.set(0, 0, 1);
+//     m.set(0, 1, 2);
+//     m.set(1, 0, 3);
+//     m.set(1, 1, 4);
+
+//     Vector2i result = m[0];
+//     EXPECT_EQ(result.get(0,0), 0);
+//     EXPECT_EQ(result.get(0,1), 0);
+// }

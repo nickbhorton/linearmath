@@ -13,7 +13,6 @@ class Matrix {
 
     Matrix<Type, Rows, Cols> Identity();
 
-
     void set(int row, int col, Type value);
     Type get(int row, int col) const;
     int rows() const;
@@ -26,6 +25,12 @@ class Matrix {
     // if ROWCOLORDER is true. Otherwise the columns are contigious
     bool RowColOrd;
 }; // class Matrix
+
+template<typename Type, int Size>
+using RowVector = Matrix<Type, 1, Size>; 
+
+template<typename Type, int Size>
+using ColVector = Matrix<Type, Size, 1>; 
 
 // Constructors
 
