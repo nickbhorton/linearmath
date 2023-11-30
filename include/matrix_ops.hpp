@@ -90,6 +90,17 @@ Matrix<Type, Rows, Cols> operator-(const Matrix<Type, Rows, Cols>& lhs, const Ma
 }
 
 template <typename Type, int Rows, int Cols>
+Matrix<Type, Rows, Cols> operator-(const Matrix<Type, Rows, Cols>& target) {
+    Matrix<Type, Rows, Cols> result {};
+    for (int i = 0; i < Rows; i++){
+        for (int j = 0; j < Cols; j++){
+            result.set(i, j, -target.get(i, j));
+        }
+    }
+    return result;
+}
+
+template <typename Type, int Rows, int Cols>
 bool operator==(const Matrix<Type, Rows, Cols>& lhs, const Matrix<Type, Rows, Cols>& rhs) {
     for (int i = 0; i < Rows; i++){
         for (int j = 0; j < Cols; j++){
@@ -108,17 +119,20 @@ bool operator!=(const Matrix<Type, Rows, Cols>& lhs, const Matrix<Type, Rows, Co
 
 template <typename Type, int Rows, int Cols>
 Matrix<Type, Rows, Cols> Matrix<Type, Rows, Cols>::operator+=(const Matrix<Type, Rows, Cols>& other) {
-    this = this + other;
+    *this = *this + other;
+    return *this;
 }
 
 template <typename Type, int Rows, int Cols>
 Matrix<Type, Rows, Cols> Matrix<Type, Rows, Cols>::operator-=(const Matrix<Type, Rows, Cols>& other) {
-    this = this - other;
+    *this = *this - other;
+    return *this;
 }
 
 template <typename Type, int Rows, int Cols>
 Matrix<Type, Rows, Cols> Matrix<Type, Rows, Cols>::operator*=(const Matrix<Type, Rows, Cols>& other) {
-    this = this * other;
+    *this = *this * other;
+    return *this;
 }
 
 template <typename Type, int Rows, int Cols>

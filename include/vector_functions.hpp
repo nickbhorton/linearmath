@@ -39,6 +39,27 @@ namespace vec{
         return v;
     }
 
+    template <typename Type>
+    inline Matrix<Type, 4, 1> promote(const Matrix<Type, 3, 1>& target, const Type& w)
+    {
+        Matrix<Type, 4, 1> result {};
+        result.set(0, 0, target.get(0, 0));
+        result.set(1, 0, target.get(1, 0));
+        result.set(2, 0, target.get(2, 0));
+        result.set(3, 0, w);
+        return result;
+    }
+
+    template <typename Type>
+    inline Matrix<Type, 3, 1> demote(const Matrix<Type, 4, 1>& target)
+    {
+        Matrix<Type, 3, 1> result {};
+        result.set(0, 0, target.get(0, 0));
+        result.set(1, 0, target.get(1, 0));
+        result.set(2, 0, target.get(2, 0));
+        return result;
+    }
+
     template <typename Type, int Size>
     inline Type dot(const Matrix<Type, 1, Size>& lhs, const Matrix<Type, Size, 1>& rhs)
     {
@@ -96,7 +117,7 @@ namespace vec{
     {
         float len = vec::length(target);
         if (len == 0.0f){
-            return Matrix<float, Size, 1>{};
+            return Matrix<float, Size, 1>{target.RowColOrd};
         }
         return ((float)1/len) * target;
     }

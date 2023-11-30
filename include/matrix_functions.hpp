@@ -23,6 +23,21 @@ namespace mat{
     }
 
     template <typename Type, int Rows, int Cols>
+    inline Matrix<Type, Rows, Cols> identity(bool RowColOrd)
+    {
+        Matrix<Type, Rows, Cols> m {RowColOrd};
+        for (unsigned int row = 0; row < Rows; row++){
+            for (unsigned int col = 0; col < Cols; col++){
+                if (row == col)
+                {
+                    m.set(row, col, 1);
+                }
+            }
+        }
+        return m;
+    }
+
+    template <typename Type, int Rows, int Cols>
     inline Matrix<Type, Rows, Cols> identity(const Type& diag_values)
     {
         Matrix<Type, Rows, Cols> m {};
@@ -145,7 +160,45 @@ namespace mat{
 
     template <typename Type>
     inline Matrix<Type, 4, 4> create(const Matrix<Type, 4, 1>& v1, const Matrix<Type, 4, 1>& v2, const Matrix<Type, 4, 1>& v3, const Matrix<Type, 4, 1>& v4) {
-        return mat::create(v1.transpose(), v2.transpose(), v3.transpose(), v4.transpose());
+        Matrix<Type, 4, 4> m {};
+        m.set(0, 0, v1.get(0, 0));
+        m.set(1, 0, v1.get(0, 1));
+        m.set(2, 0, v1.get(0, 2));
+        m.set(3, 0, v1.get(0, 3));
+        m.set(0, 1, v2.get(0, 0));
+        m.set(1, 1, v2.get(0, 1));
+        m.set(2, 1, v2.get(0, 2));
+        m.set(3, 1, v2.get(0, 3));
+        m.set(0, 2, v3.get(0, 0));
+        m.set(1, 2, v3.get(0, 1));
+        m.set(2, 2, v3.get(0, 2));
+        m.set(3, 2, v3.get(0, 3));
+        m.set(0, 3, v4.get(0, 0));
+        m.set(1, 3, v4.get(0, 1));
+        m.set(2, 3, v4.get(0, 2));
+        m.set(3, 3, v4.get(0, 3));
+        return m;
+    }
+
+    template <typename Type>
+    inline Matrix<Type, 4, 4> rot_to_view(const Matrix<Type, 3, 3>& rot, const Matrix<Type, 3, 1>& d) {
+        Matrix<Type, 4, 4> result {rot.RowColOrd};
+        result.set(0, 0, rot.get(0, 0));
+        result.set(0, 1, rot.get(0, 1));
+        result.set(0, 2, rot.get(0, 2));
+        result.set(1, 0, rot.get(1, 0));
+        result.set(1, 1, rot.get(1, 1));
+        result.set(1, 2, rot.get(1, 2));
+        result.set(2, 0, rot.get(2, 0));
+        result.set(2, 1, rot.get(2, 1));
+        result.set(2, 2, rot.get(2, 2));
+
+        result.set(0, 3, d.get(0, 0));
+        result.set(1, 3, d.get(1, 0));
+        result.set(2, 3, d.get(2, 0));
+
+        result.set(3, 3, (Type) 1);
+        return result;
     }
 }
 

@@ -33,8 +33,9 @@ class Matrix {
     int rows() const;
     int cols() const;
     bool is_square() const;
+    int size() const;
 
-    private:
+
     Type data[Rows * Cols];
 
     // Matrices are stored as arrays. The rows are contigious in memory
@@ -83,7 +84,7 @@ inline Matrix<Type, Rows, Cols> Matrix<Type, Rows, Cols>::identity() const
 template <typename Type, int Rows, int Cols>
 inline Matrix<Type, Cols, Rows> Matrix<Type, Rows, Cols>::transpose() const
 {
-    Matrix<Type, Cols, Rows> result{};
+    Matrix<Type, Cols, Rows> result{RowColOrd};
     for (int i = 0; i < Rows; i++) {
         for (int j = 0; j < Cols; j++){
             result.set(j, i, get(i, j));
@@ -94,7 +95,7 @@ inline Matrix<Type, Cols, Rows> Matrix<Type, Rows, Cols>::transpose() const
 
 template <typename Type, int Rows, int Cols>
 Matrix<Type, Rows - 1, Cols - 1> Matrix<Type, Rows, Cols>::minor(int i, int j) const {
-    Matrix<Type, Rows - 1, Cols - 1> result{};
+    Matrix<Type, Rows - 1, Cols - 1> result{RowColOrd};
     int major_i = 0;
     int major_j = 0;
     int minor_i = 0;
@@ -174,6 +175,11 @@ inline int Matrix<Type, Rows, Cols>::cols() const {
 template <typename Type, int Rows, int Cols>
 inline bool Matrix<Type, Rows, Cols>::is_square() const {
     return Rows == Cols;
+}
+
+template <typename Type, int Rows, int Cols>
+inline int Matrix<Type, Rows, Cols>::size() const {
+    return sizeof(Type) * Rows * Cols;
 }
 
 // Understandable type aliases
