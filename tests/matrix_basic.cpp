@@ -469,3 +469,13 @@ TEST(MATRIX_BASIC, normalization_of_zeros){
     EXPECT_EQ(vec::normalize(y), vec::create(0.0f, 0.0f, 0.0f));
     EXPECT_EQ(vec::normalize(y.transpose()), vec::create(0.0f, 0.0f, 0.0f).transpose());
 }
+
+TEST(MATRIX_BASIC, vector_index){
+    vec4i x = vec::create(1, 2, 3, 4);
+    EXPECT_EQ(x[0], 1);
+    EXPECT_EQ(x[1], 2);
+    EXPECT_EQ(x[2], 3);
+    EXPECT_EQ(x[3], 4);
+    x[0] = 2;
+    EXPECT_EQ(x[0], 2);
+}

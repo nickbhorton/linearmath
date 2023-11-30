@@ -26,6 +26,7 @@ class Matrix {
     Matrix<Type, Rows, Cols> operator+=(const Matrix<Type, Rows, Cols>& other);
     Matrix<Type, Rows, Cols> operator-=(const Matrix<Type, Rows, Cols>& other);
     Matrix<Type, Rows, Cols> operator*=(const Matrix<Type, Rows, Cols>& other);
+    Type& operator[](unsigned int i);
 
     void set(int row, int col, Type value);
     Type get(int row, int col) const;

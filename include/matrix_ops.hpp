@@ -5,6 +5,13 @@
 #include "matrix.hpp"
 #endif
 
+
+template <typename Type, int Rows, int Cols>
+inline Type& Matrix<Type, Rows, Cols>::operator[](unsigned int i)
+{
+    return data[i];
+}
+
 template <typename Type, int RowsLHS, int RowsRHSColsLHS, int ColsRHS>
 Matrix<Type, RowsLHS, ColsRHS> operator*(const Matrix<Type, RowsLHS, RowsRHSColsLHS>& lhs, const Matrix<Type, RowsRHSColsLHS, ColsRHS>& rhs) {
     Matrix<Type, RowsLHS, ColsRHS> result {};
