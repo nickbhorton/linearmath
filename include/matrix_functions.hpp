@@ -6,21 +6,7 @@
 #endif
 
 namespace mat{
-    template <typename Type>
-    Type det(Matrix<Type, 2, 2> m) {
-        return m.get(0, 0) * m.get(1, 1) - m.get(0, 1) * m.get(1, 0);
-    }
-
-    template <typename Type>
-    Type det(Matrix<Type, 3, 3> m) {
-        return det(m.minor(0, 0)) - det(m.minor(1, 0)) + det(m.minor(2, 0));
-    }
-
-    template <typename Type>
-    Type det(Matrix<Type, 4, 4> m) {
-        return det(m.minor(0, 0)) - det(m.minor(1, 0)) + det(m.minor(2, 0)) + det(m.minor(3, 0));
-    }
-
+    
     template <typename Type, int Rows, int Cols>
     inline Matrix<Type, Rows, Cols> identity()
     {

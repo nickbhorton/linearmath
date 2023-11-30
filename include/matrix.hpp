@@ -21,6 +21,7 @@ class Matrix {
     Matrix<Type, Rows, Cols> identity() const;
     Matrix<Type, Cols, Rows> transpose() const;
     Matrix<Type, Rows - 1, Cols - 1> minor(int i, int j) const;
+    Type det() const;
 
     Matrix<Type, Rows, Cols> operator+=(const Matrix<Type, Rows, Cols>& other);
 
@@ -112,6 +113,25 @@ Matrix<Type, Rows - 1, Cols - 1> Matrix<Type, Rows, Cols>::minor(int i, int j) c
     }
 
     return result;
+}
+
+template <typename Type, int Rows, int Cols>
+Type Matrix<Type, Rows, Cols>::det() const {
+    if constexpr(Rows == 2 && Cols == 2) {
+        return get(0, 0) * get(1, 1) - get(0, 1) * get(1, 0);
+    }
+    else {
+        Type sum = (Type) 0;
+        for (int i = 0; i < Cols; i++){
+            if (i % 2 == 0){
+                sum += get(0, i) * minor(0, i).det();
+            }
+            else {
+                sum -= get(0, i) * minor(0, i).det();
+            }
+        }
+        return sum;
+    }
 }
 
 // Getters and Setters

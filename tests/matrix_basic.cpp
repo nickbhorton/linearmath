@@ -400,7 +400,7 @@ TEST(MATRIX_BASIC, det_2x2){
     vec2i x = vec::create(1, 2);
     vec2i y = vec::create(3, 4);
     mat2i m = mat::create(x, y).transpose();
-    EXPECT_EQ(mat::det(m), -2);
+    EXPECT_EQ(m.det(), -2);
 }
 
 TEST(MATRIX_BASIC, det_3x3){
@@ -408,7 +408,7 @@ TEST(MATRIX_BASIC, det_3x3){
     vec3i y = vec::create(4, 5, 6);
     vec3i z = vec::create(7, 8, 9);
     mat3i m = mat::create(x, y, z).transpose();
-    EXPECT_EQ(mat::det(m), 0);
+    EXPECT_EQ(m.det(), 0);
 }
 
 TEST(MATRIX_BASIC, det_4x4){
@@ -417,7 +417,7 @@ TEST(MATRIX_BASIC, det_4x4){
     vec4i z = vec::create(9, 10, 11, 12);
     vec4i w = vec::create(13, 14, 15, 16);
     mat4i m = mat::create(x, y, z, w).transpose();
-    EXPECT_EQ(mat::det(m), 0);
+    EXPECT_EQ(m.det(), 0);
 }
 
 TEST(MATRIX_BASIC, cross_vec3){
