@@ -18,6 +18,8 @@ class Matrix {
     Matrix<Type, Cols, Rows> transpose() const;
     Matrix<Type, Rows - 1, Cols - 1> minor(int i, int j) const;
 
+    Matrix<Type, Rows, Cols> operator+=(const Matrix<Type, Rows, Cols>& other);
+
     void set(int row, int col, Type value);
     Type get(int row, int col) const;
     int rows() const;
@@ -126,6 +128,11 @@ bool operator==(const Matrix<Type, Rows, Cols>& lhs, const Matrix<Type, Rows, Co
 template <typename Type, int Rows, int Cols>
 bool operator!=(const Matrix<Type, Rows, Cols>& lhs, const Matrix<Type, Rows, Cols>& rhs) {
     return !(lhs == rhs);
+}
+
+template <typename Type, int Rows, int Cols>
+Matrix<Type, Rows, Cols> Matrix<Type, Rows, Cols>::operator+=(const Matrix<Type, Rows, Cols>& other) {
+    this = this + other;
 }
 
 template <typename Type, int Rows, int Cols>
@@ -463,6 +470,24 @@ namespace vec{
     inline Matrix<Type, 1, Size> cross(const Matrix<Type, 1, Size>& lhs, const Matrix<Type, 1, Size>& rhs)
     {
         return cross(lhs.transpose(), rhs.transpose()).transpose();
+    }
+
+    template <typename Type, int Size>
+    inline Type length(const Matrix<Type, Size, 1>& target)
+    {
+        return std::sqrt(std::pow(target.get(0, 0), 2) + std::pow(target.get(1, 0), 2) + std::pow(target.get(2, 0), 2));
+    }
+
+    template <typename Type, int Size>
+    inline Type length(const Matrix<Type, 1, Size>& target)
+    {
+        return vec::length(target.transpose());
+    }
+
+    template <typename Type, int Size>
+    inline Matrix<Type, Size, 1> normalize(const Matrix<Type, Size, 1>& target)
+    {
+        return ((Type)1/vec::length(target)) * target;
     }
 }
 
