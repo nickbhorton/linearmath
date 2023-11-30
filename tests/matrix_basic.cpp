@@ -388,3 +388,20 @@ TEST(MATRIX_BASIC, vector_promote){
     EXPECT_EQ(x4[2], 3);
     EXPECT_EQ(x4[3], 4);
 }
+
+TEST(MATRIX_BASIC, matrx_index){
+    mat2i m = mat::identity<int, 2, 2>();
+    vec2i x = m.col(0);
+    vec2i y = m.col(1);
+    EXPECT_EQ(x[0], 1);
+    EXPECT_EQ(x[1], 0);
+    EXPECT_EQ(y[0], 0);
+    EXPECT_EQ(y[1], 1);
+    m = mat::create(vec::create(1, 2), vec::create(3, 4));
+    rvec2i z = m.row(0);
+    rvec2i w = m.row(1);
+    EXPECT_EQ(z[0], 1);
+    EXPECT_EQ(z[1], 3);
+    EXPECT_EQ(w[0], 2);
+    EXPECT_EQ(w[1], 4);
+}

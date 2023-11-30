@@ -9,7 +9,6 @@ namespace vec{
     /** \brief by default creates a column vector. Transpose if a row vector is wanted
       * 
       */
-
     template <typename Type>
     inline ColVector<Type, 2> create(const Type &t1, const Type &t2)
     {
@@ -39,6 +38,7 @@ namespace vec{
         v.set(3, t4);
         return v;
     }
+
 
     template <typename Type, int Size>
     inline Type dot(const Matrix<Type, 1, Size>& lhs, const Matrix<Type, Size, 1>& rhs)

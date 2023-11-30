@@ -10,6 +10,9 @@
 // For IDEs to be able to see header
 #define PROCESSED
 
+template<typename Type, int Size> class ColVector;
+template<typename Type, int Size> class RowVector;
+
 /** \class Matrix
   * 
   * \brief A class to construct an arbitrarily sized matrix or vector.
@@ -24,12 +27,13 @@ class Matrix {
     Matrix<Type, Cols, Rows> transpose() const;
     Matrix<Type, Rows - 1, Cols - 1> minor(int i, int j) const;
     Type det() const;
+    RowVector<Type, Cols> row (unsigned int i);
+    ColVector<Type, Rows> col (unsigned int i);
 
 
     Matrix<Type, Rows, Cols> operator+=(const Matrix<Type, Rows, Cols>& other);
     Matrix<Type, Rows, Cols> operator-=(const Matrix<Type, Rows, Cols>& other);
     Matrix<Type, Rows, Cols> operator*=(const Matrix<Type, Rows, Cols>& other);
-    Type& operator[](unsigned int i);
 
     void set(int row, int col, Type value);
     Type get(int row, int col) const;
@@ -159,15 +163,15 @@ template <typename Type, int Rows, int Cols>
 inline int Matrix<Type, Rows, Cols>::size() const {
     return sizeof(Type) * Rows * Cols;
 }
-
 // Matrix Class
 
 // ColVector Class
-
 template<typename Type, int Size>
 class ColVector : public Matrix<Type, Size, 1> {
-    public:
+public:
     ColVector<Type, Size + 1> promote(Type new_val) const; 
+    Type& operator[](unsigned int index);
+
     void set(int pos, Type value);
     Type get(int pos) const;
 };
@@ -192,15 +196,15 @@ ColVector<Type, Size + 1> ColVector<Type, Size>::promote(Type new_val) const {
 
     return result;
 }
-
 // ColVector class
 
 // RowVector Class
-
 template<typename Type, int Size>
 class RowVector : public Matrix<Type, 1, Size> {
-    public:
-    RowVector<Type, Size + 1> promote(Type new_val) const; 
+public:
+    RowVector<Type, Size + 1> promote(Type new_val) const;
+    Type& operator[](unsigned int index);
+
     void set(int pos, Type value);
     Type get(int pos) const;
 };
@@ -227,35 +231,8 @@ RowVector<Type, Size + 1> RowVector<Type, Size>::promote(Type new_val) const {
 
 // RowVector Class
 
+#include "vector_ops.hpp"
 #include "vector_functions.hpp"
-
-// ColVector and Matrix Multiplication
-
-template <typename Type, int Size>
-ColVector<Type, Size> operator*(const Matrix<Type, Size, Size>& lhs, const Matrix<Type, Size, 1>& rhs) {
-    ColVector<Type, Size> result {};
-    for (int i = 0; i < Size; i++){
-        Type sum = 0;
-        for (int k = 0; k < Size; k++) {
-            sum += lhs.get(i, k) * rhs.get(k, 0);
-        }
-        result.set(i, sum);
-    }
-    return result;
-}
-
-template <typename Type, int Size>
-RowVector<Type, Size> operator*(const Matrix<Type, 1, Size>& lhs, const Matrix<Type, Size, Size>& rhs) {
-    RowVector<Type, Size> result {};
-    for (int j = 0; j < Size; j++){
-        Type sum = 0;
-        for (int k = 0; k < Size; k++) {
-            sum += lhs.get(0, k) * rhs.get(k, j);
-        }
-        result.set(j, sum);
-    }
-    return result;
-}
 
 // Understandable type aliases
 
