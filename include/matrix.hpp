@@ -2,8 +2,10 @@
 #define MATRIX_HEADER
 
 #include <iostream>
-#include <tuple>
 #include <cmath>
+#include <array>
+#include <initializer_list>
+
 
 // For IDEs to be able to see header
 #define PROCESSED
@@ -11,17 +13,18 @@
 /** \class Matrix
   * 
   * \brief A class to construct an arbitrarily sized matrix or vector.
+  * Always stored in column major order for multiplication optimizations
   */
 template<typename Type, int Rows, int Cols> 
 class Matrix {
     public:
     Matrix<Type, Rows, Cols>();
-    Matrix<Type, Rows, Cols>(bool RowColOrd);
 
     Matrix<Type, Rows, Cols> identity() const;
     Matrix<Type, Cols, Rows> transpose() const;
     Matrix<Type, Rows - 1, Cols - 1> minor(int i, int j) const;
     Type det() const;
+
 
     Matrix<Type, Rows, Cols> operator+=(const Matrix<Type, Rows, Cols>& other);
     Matrix<Type, Rows, Cols> operator-=(const Matrix<Type, Rows, Cols>& other);
@@ -35,30 +38,17 @@ class Matrix {
     bool is_square() const;
     int size() const;
 
-
-    Type data[Rows * Cols];
-
-    // Matrices are stored as arrays. The rows are contigious in memory
-    // if ROWCOLORDER is true. Otherwise the columns are contigious
-    bool RowColOrd;
+    std::array<Type, Rows * Cols> data;
 }; // class Matrix
 
 #include "matrix_ops.hpp"
 #include "matrix_functions.hpp"
-#include "vector_functions.hpp"
 
 // Constructors
 
 template <typename Type, int Rows, int Cols>
-inline Matrix<Type, Rows, Cols>::Matrix() : RowColOrd{true}
+inline Matrix<Type, Rows, Cols>::Matrix()
 {
-    for (unsigned int i = 0; i < Rows * Cols; i++){
-        data[i] = 0;
-    }
-}
-
-template <typename Type, int Rows, int Cols>
-inline Matrix<Type, Rows, Cols>::Matrix(bool RowColOrd) : RowColOrd{RowColOrd} {
     for (unsigned int i = 0; i < Rows * Cols; i++){
         data[i] = 0;
     }
@@ -84,7 +74,7 @@ inline Matrix<Type, Rows, Cols> Matrix<Type, Rows, Cols>::identity() const
 template <typename Type, int Rows, int Cols>
 inline Matrix<Type, Cols, Rows> Matrix<Type, Rows, Cols>::transpose() const
 {
-    Matrix<Type, Cols, Rows> result{RowColOrd};
+    Matrix<Type, Cols, Rows> result{};
     for (int i = 0; i < Rows; i++) {
         for (int j = 0; j < Cols; j++){
             result.set(j, i, get(i, j));
@@ -95,7 +85,7 @@ inline Matrix<Type, Cols, Rows> Matrix<Type, Rows, Cols>::transpose() const
 
 template <typename Type, int Rows, int Cols>
 Matrix<Type, Rows - 1, Cols - 1> Matrix<Type, Rows, Cols>::minor(int i, int j) const {
-    Matrix<Type, Rows - 1, Cols - 1> result{RowColOrd};
+    Matrix<Type, Rows - 1, Cols - 1> result{};
     int major_i = 0;
     int major_j = 0;
     int minor_i = 0;
@@ -141,25 +131,13 @@ Type Matrix<Type, Rows, Cols>::det() const {
 // Getters and Setters
 
 template <typename Type, int Rows, int Cols>
-inline void Matrix<Type, Rows, Cols>::set(int row, int col, Type value)
-{
-    if (RowColOrd){
-        data[Cols * row + col] = value;
-    }
-    else {
-        data[Rows * col + row] = value;
-    }
+inline void Matrix<Type, Rows, Cols>::set(int row, int col, Type value) {
+    data[Rows * col + row] = value;
 }
 
 template <typename Type, int Rows, int Cols>
-inline Type Matrix<Type, Rows, Cols>::get(int row, int col) const
-{
-    if (RowColOrd){
-        return data[Cols * row + col];
-    }
-    else {
-        return data[Rows * col + row];
-    }
+inline Type Matrix<Type, Rows, Cols>::get(int row, int col) const{
+    return data[Rows * col + row];
 }
 
 template <typename Type, int Rows, int Cols>
@@ -182,13 +160,104 @@ inline int Matrix<Type, Rows, Cols>::size() const {
     return sizeof(Type) * Rows * Cols;
 }
 
+// Matrix Class
+
+// ColVector Class
+
+template<typename Type, int Size>
+class ColVector : public Matrix<Type, Size, 1> {
+    public:
+    ColVector<Type, Size + 1> promote(Type new_val) const; 
+    void set(int pos, Type value);
+    Type get(int pos) const;
+};
+
+template <typename Type, int Size>
+inline void ColVector<Type, Size>::set(int pos, Type value) {
+   Matrix<Type, Size, 1>::set(pos, 0, value);
+}
+
+template <typename Type, int Size>
+inline Type ColVector<Type, Size>::get(int pos) const {
+    return Matrix<Type, Size, 1>::get(pos, 0);
+}
+
+template <typename Type, int Size>
+ColVector<Type, Size + 1> ColVector<Type, Size>::promote(Type new_val) const {
+    ColVector<Type, Size + 1> result {};
+    for (int i = 0; i < Size; i++){
+        result.set(i, get(i));
+    }
+    result.set(Size, new_val);
+
+    return result;
+}
+
+// ColVector class
+
+// RowVector Class
+
+template<typename Type, int Size>
+class RowVector : public Matrix<Type, 1, Size> {
+    public:
+    RowVector<Type, Size + 1> promote(Type new_val) const; 
+    void set(int pos, Type value);
+    Type get(int pos) const;
+};
+
+template <typename Type, int Size>
+inline void RowVector<Type, Size>::set(int pos, Type value) {
+    Matrix<Type, 1, Size>::set(0, pos, value);
+}
+
+template <typename Type, int Size>
+inline Type RowVector<Type, Size>::get(int pos) const {
+    return Matrix<Type, 1, Size>::get(0, pos);
+}
+
+template <typename Type, int Size>
+RowVector<Type, Size + 1> RowVector<Type, Size>::promote(Type new_val) const {
+    RowVector<Type, Size + 1> result {};
+    for (int i = 0; i < Size; i++){
+        result.set(i, get(i));
+    }
+    result.set(Size, new_val);
+    return result;
+}
+
+// RowVector Class
+
+#include "vector_functions.hpp"
+
+// ColVector and Matrix Multiplication
+
+template <typename Type, int Size>
+ColVector<Type, Size> operator*(const Matrix<Type, Size, Size>& lhs, const Matrix<Type, Size, 1>& rhs) {
+    ColVector<Type, Size> result {};
+    for (int i = 0; i < Size; i++){
+        Type sum = 0;
+        for (int k = 0; k < Size; k++) {
+            sum += lhs.get(i, k) * rhs.get(k, 0);
+        }
+        result.set(i, sum);
+    }
+    return result;
+}
+
+template <typename Type, int Size>
+RowVector<Type, Size> operator*(const Matrix<Type, 1, Size>& lhs, const Matrix<Type, Size, Size>& rhs) {
+    RowVector<Type, Size> result {};
+    for (int j = 0; j < Size; j++){
+        Type sum = 0;
+        for (int k = 0; k < Size; k++) {
+            sum += lhs.get(0, k) * rhs.get(k, j);
+        }
+        result.set(j, sum);
+    }
+    return result;
+}
+
 // Understandable type aliases
-
-template<typename Type, int Size>
-using RowVector = Matrix<Type, 1, Size>; 
-
-template<typename Type, int Size>
-using ColVector = Matrix<Type, Size, 1>; 
 
 typedef Matrix<float, 2, 2> mat2f;
 typedef Matrix<float, 3, 3> mat3f;
@@ -215,3 +284,5 @@ typedef RowVector<int, 3> rvec3i;
 typedef RowVector<int, 4> rvec4i;
 
 #endif
+
+

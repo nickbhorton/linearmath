@@ -2,11 +2,10 @@
 #include "../include/matrix.hpp"
 
 int main() {
-    vec3i x = vec::create(1, 2, 3);
-    vec3i y = vec::create(4, 5, 6);
-    vec3i z = vec::create(7, 8, 9);
-    mat3i m = mat::create(x, y, z).transpose();
-    mat2i m_0_0 = m.minor(0, 0);
-    std::cout << m << "\n";
-    std::cout << m_0_0 << "\n";
+    vec4i x = vec::create(1, 2, 3, 4);
+    vec4i y = vec::create(5, 6, 7, 8);
+    vec4i z = vec::create(9, 10, 11, 12);
+    vec4i w = vec::create(13, 14, 15, 16);
+    mat4i m = mat::create(x, y, z, w);
+    std::cout << x << "\n";
 }
