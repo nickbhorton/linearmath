@@ -217,6 +217,26 @@ TEST(MATRIX_BASIC, mat_scalar_mult){
     EXPECT_EQ(result.get(1,1), 8);
 }
 
+TEST(MATRIX_BASIC, mat_scalar_div){
+    mat2i m {true};
+    m.set(0, 0, 2);
+    m.set(0, 1, 4);
+    m.set(1, 0, 6);
+    m.set(1, 1, 8);
+
+    mat2i result = m / 2;
+    EXPECT_EQ(result.get(0,0), 1);
+    EXPECT_EQ(result.get(0,1), 2);
+    EXPECT_EQ(result.get(1,0), 3);
+    EXPECT_EQ(result.get(1,1), 4);
+
+    result = m / 0;
+    EXPECT_EQ(result.get(0,0), 0);
+    EXPECT_EQ(result.get(0,1), 0);
+    EXPECT_EQ(result.get(1,0), 0);
+    EXPECT_EQ(result.get(1,1), 0);
+}
+
 TEST(MATRIX_BASIC, mat2x2_from_cvec2) {
     vec2i x = vec::create(1, 2);
     vec2i y = vec::create(3, 4);
@@ -427,4 +447,25 @@ TEST(MATRIX_BASIC, cross_vec3){
     EXPECT_EQ(vec::cross(y, x), vec::create(0, 0, -1));
     EXPECT_EQ(vec::cross(x.transpose(), y.transpose()), vec::create(0, 0, 1).transpose());
     EXPECT_EQ(vec::cross(y.transpose(), x.transpose()), vec::create(0, 0, -1).transpose());
+}
+
+TEST(MATRIX_BASIC, vec_length){
+    vec2i x = vec::create(3, 4);
+    EXPECT_EQ(vec::length(x), 5);
+    EXPECT_EQ(vec::length(x.transpose()), 5);
+    vec3i y = vec::create(1, 0, 1);
+    EXPECT_EQ(vec::length(y), std::sqrt(2.0f));
+    EXPECT_EQ(vec::length(y.transpose()), std::sqrt(2.0f));
+}
+
+TEST(MATRIX_BASIC, normalization){
+    vec3f y = vec::create(1.0f, 0.0f, 1.0f);
+    EXPECT_EQ(vec::normalize(y), vec::create(std::sqrt(2.0f)/2.0f, 0.0f, std::sqrt(2.0f)/2.0f));
+    EXPECT_EQ(vec::normalize(y.transpose()), vec::create(std::sqrt(2.0f)/2.0f, 0.0f, std::sqrt(2.0f)/2.0f).transpose());
+}
+
+TEST(MATRIX_BASIC, normalization_of_zeros){
+    vec3f y = vec::create(0.0f, 0.0f, 0.0f);
+    EXPECT_EQ(vec::normalize(y), vec::create(0.0f, 0.0f, 0.0f));
+    EXPECT_EQ(vec::normalize(y.transpose()), vec::create(0.0f, 0.0f, 0.0f).transpose());
 }

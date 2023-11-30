@@ -24,6 +24,8 @@ class Matrix {
     Type det() const;
 
     Matrix<Type, Rows, Cols> operator+=(const Matrix<Type, Rows, Cols>& other);
+    Matrix<Type, Rows, Cols> operator-=(const Matrix<Type, Rows, Cols>& other);
+    Matrix<Type, Rows, Cols> operator*=(const Matrix<Type, Rows, Cols>& other);
 
     void set(int row, int col, Type value);
     Type get(int row, int col) const;

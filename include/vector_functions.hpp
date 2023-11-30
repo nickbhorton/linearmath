@@ -76,22 +76,37 @@ namespace vec{
     }
 
     template <typename Type, int Size>
-    inline Type length(const Matrix<Type, Size, 1>& target)
+    inline float length(const Matrix<Type, Size, 1>& target)
     {
-        return std::sqrt(std::pow(target.get(0, 0), 2) + std::pow(target.get(1, 0), 2) + std::pow(target.get(2, 0), 2));
+        Type sum = (Type) 0;
+        for (int i = 0; i < Size; i++){
+            sum += std::pow(target.get(i, 0), 2);
+        }
+        return std::sqrt(sum);
     }
 
     template <typename Type, int Size>
-    inline Type length(const Matrix<Type, 1, Size>& target)
+    inline float length(const Matrix<Type, 1, Size>& target)
     {
         return vec::length(target.transpose());
     }
 
-    template <typename Type, int Size>
-    inline Matrix<Type, Size, 1> normalize(const Matrix<Type, Size, 1>& target)
+    template <int Size>
+    inline Matrix<float, Size, 1> normalize(const Matrix<float, Size, 1>& target)
     {
-        return ((Type)1/vec::length(target)) * target;
+        float len = vec::length(target);
+        if (len == 0.0f){
+            return Matrix<float, Size, 1>{};
+        }
+        return ((float)1/len) * target;
+    }
+
+    template <int Size>
+    inline Matrix<float, 1, Size> normalize(const Matrix<float, 1, Size>& target)
+    {
+        return vec::normalize(target.transpose()).transpose();
     }
 }
+
 
 #endif
