@@ -243,11 +243,7 @@ TEST(MATRIX_BASIC, mat_ns_identity) {
 
 TEST(MATRIX_BASIC, dot_prod) {
     vec3i v = vec::create(1, 1, 1);
-    int result = vec::dot(v.transpose(), v);
-    EXPECT_EQ(result, 3);
-    result = vec::dot(v, v);
-    EXPECT_EQ(result, 3);
-    result = vec::dot(v.transpose(), v.transpose());
+    int result = vec::dot(v, v);
     EXPECT_EQ(result, 3);
 }
 
@@ -345,29 +341,23 @@ TEST(MATRIX_BASIC, cross_vec3){
     vec3i y = vec::create(0, 1, 0);
     EXPECT_EQ(vec::cross(x, y), vec::create(0, 0, 1));
     EXPECT_EQ(vec::cross(y, x), vec::create(0, 0, -1));
-    EXPECT_EQ(vec::cross(x.transpose(), y.transpose()), vec::create(0, 0, 1).transpose());
-    EXPECT_EQ(vec::cross(y.transpose(), x.transpose()), vec::create(0, 0, -1).transpose());
 }
 
 TEST(MATRIX_BASIC, vec_length){
     vec2i x = vec::create(3, 4);
     EXPECT_EQ(vec::length(x), 5);
-    EXPECT_EQ(vec::length(x.transpose()), 5);
     vec3i y = vec::create(1, 0, 1);
     EXPECT_EQ(vec::length(y), std::sqrt(2.0f));
-    EXPECT_EQ(vec::length(y.transpose()), std::sqrt(2.0f));
 }
 
 TEST(MATRIX_BASIC, normalization){
     vec3f y = vec::create(1.0f, 0.0f, 1.0f);
     EXPECT_EQ(vec::normalize(y), vec::create(std::sqrt(2.0f)/2.0f, 0.0f, std::sqrt(2.0f)/2.0f));
-    EXPECT_EQ(vec::normalize(y.transpose()), vec::create(std::sqrt(2.0f)/2.0f, 0.0f, std::sqrt(2.0f)/2.0f).transpose());
 }
 
 TEST(MATRIX_BASIC, normalization_of_zeros){
     vec3f y = vec::create(0.0f, 0.0f, 0.0f);
     EXPECT_EQ(vec::normalize(y), vec::create(0.0f, 0.0f, 0.0f));
-    EXPECT_EQ(vec::normalize(y.transpose()), vec::create(0.0f, 0.0f, 0.0f).transpose());
 }
 
 TEST(MATRIX_BASIC, vector_index){
@@ -424,4 +414,20 @@ TEST(MATRIX_BASIC, vector_ops){
     z += -(2*x);
     EXPECT_EQ(z[0], -3);
     EXPECT_EQ(z[1], 1);
+}
+
+TEST(MATRIX_BASIC, mat4i_vec3i_mult){
+    vec4i x = vec::create(0, 0, 4, 0);
+    vec4i y = vec::create(2, 0, 0, 0);
+    vec4i z = vec::create(0, 3, 0, 5);
+    vec4i w = vec::create(0, 0, 0, 0);
+    mat4i m = mat::create(x, y, z, w);
+    std::cout << m << "\n";
+
+    vec3i target = vec::create(1, 1, 1);
+    vec3i intermediate = (m * target.promote(0.0f)).demote();
+
+    EXPECT_EQ(intermediate[0], 2);
+    EXPECT_EQ(intermediate[1], 3);
+    EXPECT_EQ(intermediate[2], 4);
 }

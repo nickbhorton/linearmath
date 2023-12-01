@@ -174,6 +174,7 @@ public:
     ColVector<Type, Size> operator-=(const ColVector<Type, Size>& other);
 
     ColVector<Type, Size + 1> promote(Type new_val) const; 
+    ColVector<Type, Size - 1> demote() const; 
     Type& operator[](unsigned int index);
 
     void set(int pos, Type value);
@@ -200,6 +201,17 @@ ColVector<Type, Size + 1> ColVector<Type, Size>::promote(Type new_val) const {
 
     return result;
 }
+
+template<typename Type, int Size>
+inline ColVector<Type,Size-1> ColVector<Type, Size>::demote() const
+{
+    ColVector<Type, Size - 1> result {};
+    for (int i = 0; i < Size - 1; i++){
+        result.set(i, get(i));
+    }
+    return result;
+}
+
 // ColVector class
 
 // RowVector Class
