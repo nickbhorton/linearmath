@@ -61,7 +61,7 @@ namespace vec{
 
 
     template <typename Type>
-    inline Matrix<Type, 3, 1> cross(const Matrix<Type, 3, 1>& lhs, const Matrix<Type, 3, 1>& rhs)
+    inline ColVector<Type, 3> cross(const ColVector<Type, 3>& lhs, const ColVector<Type, 3>& rhs)
     {
         return vec::create(
             lhs.get(1, 0) * rhs.get(2, 0) - lhs.get(2, 0) * rhs.get(1, 0),
@@ -93,11 +93,21 @@ namespace vec{
     }
 
     template <int Size>
-    inline Matrix<float, Size, 1> normalize(const Matrix<float, Size, 1>& target)
+    inline RowVector<float, Size> normalize(const RowVector<float, Size>& target)
     {
         float len = vec::length(target);
         if (len == 0.0f){
-            return Matrix<float, Size, 1>{};
+            return RowVector<float, Size>{};
+        }
+        return ((float)1/len) * target;
+    }
+
+    template <int Size>
+    inline ColVector<float, Size> normalize(const ColVector<float, Size>& target)
+    {
+        float len = vec::length(target);
+        if (len == 0.0f){
+            return ColVector<float, Size>{};
         }
         return ((float)1/len) * target;
     }
