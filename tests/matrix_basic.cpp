@@ -405,3 +405,23 @@ TEST(MATRIX_BASIC, matrx_index){
     EXPECT_EQ(w[0], 2);
     EXPECT_EQ(w[1], 4);
 }
+
+TEST(MATRIX_BASIC, vector_ops){
+    vec2i x = vec::create(1, 1);
+    vec2i y = vec::create(1, -1);
+    vec2i z = x - y;
+    EXPECT_EQ(z[0], 0);
+    EXPECT_EQ(z[1], 2);
+    z *= 2;
+    EXPECT_EQ(z[0], 0);
+    EXPECT_EQ(z[1], 4);
+    z += x;
+    EXPECT_EQ(z[0], 1);
+    EXPECT_EQ(z[1], 5);
+    z -= 2*x;
+    EXPECT_EQ(z[0], -1);
+    EXPECT_EQ(z[1], 3);
+    z += -(2*x);
+    EXPECT_EQ(z[0], -3);
+    EXPECT_EQ(z[1], 1);
+}

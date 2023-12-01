@@ -22,6 +22,7 @@ template<typename Type, int Rows, int Cols>
 class Matrix {
     public:
     Matrix<Type, Rows, Cols>();
+    Matrix<Type, Rows, Cols>(std::array<Type, Rows * Cols>  data);
 
     Matrix<Type, Rows, Cols> identity() const;
     Matrix<Type, Cols, Rows> transpose() const;
@@ -29,7 +30,6 @@ class Matrix {
     Type det() const;
     RowVector<Type, Cols> row (unsigned int i);
     ColVector<Type, Rows> col (unsigned int i);
-
 
     Matrix<Type, Rows, Cols> operator+=(const Matrix<Type, Rows, Cols>& other);
     Matrix<Type, Rows, Cols> operator-=(const Matrix<Type, Rows, Cols>& other);
@@ -169,6 +169,10 @@ inline int Matrix<Type, Rows, Cols>::size() const {
 template<typename Type, int Size>
 class ColVector : public Matrix<Type, Size, 1> {
 public:
+    ColVector<Type, Size> operator*=(const Type& other);
+    ColVector<Type, Size> operator+=(const ColVector<Type, Size>& other);
+    ColVector<Type, Size> operator-=(const ColVector<Type, Size>& other);
+
     ColVector<Type, Size + 1> promote(Type new_val) const; 
     Type& operator[](unsigned int index);
 
