@@ -414,6 +414,8 @@ TEST(MATRIX_BASIC, vector_ops){
     z += -(2*x);
     EXPECT_EQ(z[0], -3);
     EXPECT_EQ(z[1], 1);
+    EXPECT_EQ((-(-x))[0], 1);
+    EXPECT_EQ((-(-x))[1], 1);
 }
 
 TEST(MATRIX_BASIC, mat4i_vec3i_mult){
@@ -430,4 +432,46 @@ TEST(MATRIX_BASIC, mat4i_vec3i_mult){
     EXPECT_EQ(intermediate[0], 2);
     EXPECT_EQ(intermediate[1], 3);
     EXPECT_EQ(intermediate[2], 4);
+}
+
+TEST(MATRIX_BASIC, rotation_mat4f_vec3f){
+    vec4f x = vec::create(1.0f, 0.0f, 0.0f, 1.0f);
+    vec4f y = vec::create(0.0f, 1.0f, 0.0f, 0.0f);
+    vec4f z = vec::create(0.0f, 0.0f, 1.0f, 0.0f);
+    vec4f w = vec::create(0.0f, 0.0f, 0.0f, 1.0f);
+    mat4f m = mat::create(x, y, z, w).transpose();
+    std::cout << m << "\n";
+
+    vec3f target = vec::create(1.0f, 1.0f, 1.0f);
+    vec3f intermediate = (m * target.promote(1.0f)).demote();
+    std::cout << "befor: \n" << target << "\n";
+    std::cout << "after: \n" << intermediate << "\n";
+    // EXPECT_EQ(intermediate[0], 2);
+    // EXPECT_EQ(intermediate[1], 3);
+    // EXPECT_EQ(intermediate[2], 4);
+}
+
+TEST(MATRIX_BASIC, view_matrix_texting){
+    vec3f x = vec::create(1.0f, 2.0f, 3.0f);
+    vec3f y = vec::create(0.0f, 1.0f, 0.0f);
+    vec3f z = vec::create(0.0f, 0.0f, 1.0f);
+    vec3f pos = vec::create(1.0f, 1.0f, 1.0f);
+    mat3f m = mat::create(x, y, z).transpose();
+    mat4f view = mat::view(m, pos);
+    EXPECT_EQ(view.col(0)[0], 1);
+    EXPECT_EQ(view.col(0)[1], 0);
+    EXPECT_EQ(view.col(0)[2], 0);
+    EXPECT_EQ(view.col(0)[3], 0);
+    EXPECT_EQ(view.col(1)[0], 2);
+    EXPECT_EQ(view.col(1)[1], 1);
+    EXPECT_EQ(view.col(1)[2], 0);
+    EXPECT_EQ(view.col(1)[3], 0);
+    EXPECT_EQ(view.col(2)[0], 3);
+    EXPECT_EQ(view.col(2)[1], 0);
+    EXPECT_EQ(view.col(2)[2], 1);
+    EXPECT_EQ(view.col(2)[3], 0);
+    EXPECT_EQ(view.col(3)[0], 1);
+    EXPECT_EQ(view.col(3)[1], 1);
+    EXPECT_EQ(view.col(3)[2], 1);
+    EXPECT_EQ(view.col(3)[3], 1);
 }
