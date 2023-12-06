@@ -46,7 +46,7 @@ inline Matrix<float, 4, 4> ortho(
 }
 
 inline Matrix<float, 4, 4> perspective(
-    float top, float bot, float left, float right, float far, float near) {
+    float bot, float top, float left, float right, float near, float far) {
     Matrix<float, 4, 4> result {};
     result.set(0, 0, (near*2.0f)/(right - left));
     result.set(1, 1, (near*2.0f)/(top - bot));
