@@ -1,9 +1,39 @@
-#ifndef VECTOR_FUNCTIONS_HEADER
-#define VECTOR_FUNCTIONS_HEADER
+#ifndef COL_VECTOR_FUNCTIONS_HEADER
+#define COL_VECTOR_FUNCTIONS_HEADER
 
-#ifndef PROCESSED
-#include "matrix.hpp"
-#endif
+#include "class_forward_declaration.hpp"
+
+// ColVector members
+template <typename Type, int Size>
+inline void ColVector<Type, Size>::set(int pos, Type value) {
+   Matrix<Type, Size, 1>::set(pos, 0, value);
+}
+
+template <typename Type, int Size>
+inline Type ColVector<Type, Size>::get(int pos) const {
+    return Matrix<Type, Size, 1>::get(pos, 0);
+}
+
+template <typename Type, int Size>
+ColVector<Type, Size + 1> ColVector<Type, Size>::promote(Type new_val) const {
+    ColVector<Type, Size + 1> result {};
+    for (int i = 0; i < Size; i++){
+        result.set(i, get(i));
+    }
+    result.set(Size, new_val);
+
+    return result;
+}
+
+template<typename Type, int Size>
+inline ColVector<Type,Size-1> ColVector<Type, Size>::demote() const
+{
+    ColVector<Type, Size - 1> result {};
+    for (int i = 0; i < Size - 1; i++){
+        result.set(i, get(i));
+    }
+    return result;
+}
 
 namespace vec{
     /** \brief by default creates a column vector. Transpose if a row vector is wanted
@@ -66,16 +96,6 @@ namespace vec{
             sum += std::pow(target.get(i), 2);
         }
         return std::sqrt(sum);
-    }
-
-    template <int Size>
-    inline RowVector<float, Size> normalize(const RowVector<float, Size>& target)
-    {
-        float len = vec::length(target);
-        if (len == 0.0f){
-            return RowVector<float, Size>{};
-        }
-        return ((float)1/len) * target;
     }
 
     template <int Size>

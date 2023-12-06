@@ -1,30 +1,7 @@
 #ifndef MATRIX_OPS_HEADER
 #define MATRIX_OPS_HEADER
 
-#ifndef PROCESSED
-#include "matrix.hpp"
-#endif
-
-template <typename Type, int Rows, int Cols>
-inline ColVector<Type, Rows> Matrix<Type, Rows, Cols>::col(unsigned int i)
-{
-    ColVector<Type, Rows> result {};
-    for (int index = 0; index < Rows; index++) {
-        result[index] = get(index, i);
-    }
-    return result;
-}
-
-template <typename Type, int Rows, int Cols>
-inline RowVector<Type, Cols> Matrix<Type, Rows, Cols>::row(unsigned int i)
-{
-    RowVector<Type, Cols> result {};
-    for (int index = 0; index < Cols; index++) {
-        result[index] = get(i, index);
-    }
-    return result;
-}
-
+#include "class_forward_declaration.hpp"
 
 template <typename Type, int RowsLHS, int RowsRHSColsLHS, int ColsRHS>
 Matrix<Type, RowsLHS, ColsRHS> operator*(const Matrix<Type, RowsLHS, RowsRHSColsLHS>& lhs, const Matrix<Type, RowsRHSColsLHS, ColsRHS>& rhs) {

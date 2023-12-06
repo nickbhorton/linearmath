@@ -7,7 +7,9 @@ endif()
 project(LinearMath 
     VERSION 0.1 
     DESCRIPTION "C++ classes for commonly used mathematical objects in graphics programming"
-    LANGUAGES CXX) 
+    LANGUAGES C CXX) 
+
+add_library(linearmath_headers INTERFACE)
 
 option(PACKAGE_TESTS "Build the tests" ON)
 if(PACKAGE_TESTS)

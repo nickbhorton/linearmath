@@ -452,26 +452,45 @@ TEST(MATRIX_BASIC, rotation_mat4f_vec3f){
 }
 
 TEST(MATRIX_BASIC, view_matrix_texting){
-    vec3f x = vec::create(1.0f, 2.0f, 3.0f);
-    vec3f y = vec::create(0.0f, 1.0f, 0.0f);
-    vec3f z = vec::create(0.0f, 0.0f, 1.0f);
+    vec3f u = vec::create(1.0f, 0.0f, 0.0f);
+    vec3f v = vec::create(0.0f, 1.0f, 0.0f);
+    vec3f n = vec::create(0.0f, 0.0f, 1.0f);
     vec3f pos = vec::create(1.0f, 1.0f, 1.0f);
-    mat3f m = mat::create(x, y, z).transpose();
-    mat4f view = mat::view(m, pos);
+    mat4f view = mat::view(u, v, n, pos);
     EXPECT_EQ(view.col(0)[0], 1);
     EXPECT_EQ(view.col(0)[1], 0);
     EXPECT_EQ(view.col(0)[2], 0);
     EXPECT_EQ(view.col(0)[3], 0);
-    EXPECT_EQ(view.col(1)[0], 2);
+    EXPECT_EQ(view.col(1)[0], 0);
     EXPECT_EQ(view.col(1)[1], 1);
     EXPECT_EQ(view.col(1)[2], 0);
     EXPECT_EQ(view.col(1)[3], 0);
-    EXPECT_EQ(view.col(2)[0], 3);
+    EXPECT_EQ(view.col(2)[0], 0);
     EXPECT_EQ(view.col(2)[1], 0);
     EXPECT_EQ(view.col(2)[2], 1);
     EXPECT_EQ(view.col(2)[3], 0);
-    EXPECT_EQ(view.col(3)[0], 1);
-    EXPECT_EQ(view.col(3)[1], 1);
-    EXPECT_EQ(view.col(3)[2], 1);
+    EXPECT_EQ(view.col(3)[0], -1);
+    EXPECT_EQ(view.col(3)[1], -1);
+    EXPECT_EQ(view.col(3)[2], -1);
     EXPECT_EQ(view.col(3)[3], 1);
+}
+
+TEST(MATRIX_BASIC, ortho_matrix_texting){
+    mat4f view = mat::ortho(-1, 1, -1, 1, -1, 1);
+    EXPECT_EQ(view.col(0)[0], 1.0f);
+    EXPECT_EQ(view.col(0)[1], 0);
+    EXPECT_EQ(view.col(0)[2], 0);
+    EXPECT_EQ(view.col(0)[3], 0);
+    EXPECT_EQ(view.col(1)[0], 0);
+    EXPECT_EQ(view.col(1)[1], 1.0f);
+    EXPECT_EQ(view.col(1)[2], 0);
+    EXPECT_EQ(view.col(1)[3], 0);
+    EXPECT_EQ(view.col(2)[0], 0);
+    EXPECT_EQ(view.col(2)[1], 0);
+    EXPECT_EQ(view.col(2)[2], -1.0f);
+    EXPECT_EQ(view.col(2)[3], 0);
+    EXPECT_EQ(view.col(3)[0], 0);
+    EXPECT_EQ(view.col(3)[1], 0);
+    EXPECT_EQ(view.col(3)[2], 0);
+    EXPECT_EQ(view.col(3)[3], 1.0f);
 }
