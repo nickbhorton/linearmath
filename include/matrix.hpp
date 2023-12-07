@@ -1,11 +1,6 @@
 #ifndef MATRIX_HEADER
 #define MATRIX_HEADER
 
-#include <iostream>
-#include <cmath>
-#include <array>
-#include <initializer_list>
-
 #include "class_forward_declaration.hpp"
 
 /** \class Matrix
