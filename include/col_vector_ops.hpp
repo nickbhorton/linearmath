@@ -8,8 +8,11 @@ inline Type& ColVector<Type, Size>::operator[](unsigned int index){
     return this->data[index];
 }
 
-// Unary operators [op ColVector]
+//
+// Unary operators
+//
 
+// Unary minus
 template <typename Type, int Size>
 ColVector<Type, Size> operator-(const Matrix<Type, Size, 1>& target) {
     ColVector<Type, Size> result {};
@@ -19,8 +22,17 @@ ColVector<Type, Size> operator-(const Matrix<Type, Size, 1>& target) {
     return result;
 }
 
-// Binary Operator [(Square)Matrix op ColVector]
+// Unary plus
+template <typename Type, int Size>
+ColVector<Type, Size> operator+(const Matrix<Type, Size, 1>& target) {
+    return target;
+}
 
+//
+// Binary Operators 
+//
+
+// [(Square)Matrix op ColVector]
 template <typename Type, int Size>
 ColVector<Type, Size> operator*(const Matrix<Type, Size, Size>& lhs, const Matrix<Type, Size, 1>& rhs) {
     ColVector<Type, Size> result {};
@@ -34,8 +46,7 @@ ColVector<Type, Size> operator*(const Matrix<Type, Size, Size>& lhs, const Matri
     return result;
 }
 
-// Binary Operator [ColVector op ColVector]
-
+// Binary plus
 template <typename Type, int Size>
 ColVector<Type, Size> operator-(const Matrix<Type, Size, 1>& lhs, const Matrix<Type, Size, 1>& rhs) {
     ColVector<Type, Size> result {};
@@ -45,6 +56,7 @@ ColVector<Type, Size> operator-(const Matrix<Type, Size, 1>& lhs, const Matrix<T
     return result;
 }
 
+// Binary minus
 template <typename Type, int Size>
 ColVector<Type, Size> operator+(const Matrix<Type, Size, 1>& lhs, const Matrix<Type, Size, 1>& rhs) {
     ColVector<Type, Size> result {};
@@ -54,8 +66,7 @@ ColVector<Type, Size> operator+(const Matrix<Type, Size, 1>& lhs, const Matrix<T
     return result;
 }
 
-// Binary Operator [Type op ColVector]
-
+// Scalar multiplication LHS
 template <typename Type, int Size>
 ColVector<Type, Size> operator*(const Type& lhs, const Matrix<Type, Size, 1>& rhs) {
     ColVector<Type, Size> result {};
@@ -65,8 +76,7 @@ ColVector<Type, Size> operator*(const Type& lhs, const Matrix<Type, Size, 1>& rh
     return result;
 }
 
-// Binary Operator [ColVector op Type]
-
+// Scalar multiplication RHS
 template <typename Type, int Size>
 ColVector<Type, Size> operator*(const Matrix<Type, Size, 1>& lhs, const Type& rhs) {
     ColVector<Type, Size> result {};
@@ -76,8 +86,11 @@ ColVector<Type, Size> operator*(const Matrix<Type, Size, 1>& lhs, const Type& rh
     return result;
 }
 
+//
 // Assignment operators
+//
 
+// Scalar multiplication assignment
 template<typename Type, int Size>
 inline ColVector<Type,Size> ColVector<Type, Size>::operator*=(const Type & other)
 {
@@ -85,6 +98,7 @@ inline ColVector<Type,Size> ColVector<Type, Size>::operator*=(const Type & other
     return *this;
 }
 
+// Addition assignment
 template<typename Type, int Size>
 inline ColVector<Type,Size> ColVector<Type, Size>::operator+=(const ColVector<Type, Size> & other)
 {
@@ -92,6 +106,7 @@ inline ColVector<Type,Size> ColVector<Type, Size>::operator+=(const ColVector<Ty
     return *this;
 }
 
+// Subtraction assignment
 template<typename Type, int Size>
 inline ColVector<Type,Size> ColVector<Type, Size>::operator-=(const ColVector<Type, Size> & other)
 {

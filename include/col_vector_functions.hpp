@@ -3,7 +3,6 @@
 
 #include "class_forward_declaration.hpp"
 
-// ColVector members
 template <typename Type, int Size>
 inline void ColVector<Type, Size>::set(int pos, Type value) {
    Matrix<Type, Size, 1>::set(pos, 0, value);
@@ -36,9 +35,6 @@ inline ColVector<Type,Size-1> ColVector<Type, Size>::demote() const
 }
 
 namespace vec{
-    /** \brief by default creates a column vector. Transpose if a row vector is wanted
-      * 
-      */
     template <typename Type>
     inline ColVector<Type, 2> create(const Type &t1, const Type &t2)
     {
