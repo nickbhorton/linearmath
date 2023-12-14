@@ -1,11 +1,13 @@
 <div align="center">
   
 # Nicks Linear Math Library (NLML)
-Linear math is an intuitive header only library for matrix and vector math needed for graphics programming.
-
-</div>
+Linear math is an intuitive header only library for matrix and vector math needed for graphics programming. It provides 1 primary class, the matrix class, and two derivitive classes, column vector, and row vector. 
 
 [Getting started](#getting-started) •
+[Installation](#installation) •
+[Graphics Specific Functions](#graphic-specific-functions) •
+
+</div>
 
 ## Getting started
 
@@ -26,3 +28,14 @@ git clone "https://github.com/nickbhorton/linearmath.git"
 #include "matrix.hpp"
 ...
 ```
+
+## Graphics Specific Functions
+<details>
+  <summary>View</summary>
+</details>
+<details>
+  <summary>Orthographic</summary>
+</details>
+<details>
+  <summary>Perspective</summary>
+</details>
