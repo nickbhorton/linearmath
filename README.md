@@ -6,7 +6,7 @@
 Linear math is an intuitive header only library for matrix and vector math needed for graphics programming. It provides 1 primary class, the matrix class, and two derivative classes, column vector, and row vector. 
 
 [Getting started](#getting-started) •
-[Installation](#installation) •
+[Usage](#usage) •
 [Useful Graphics Functions](#common-graphics-specific-functions) •
 
 </div>
@@ -67,9 +67,9 @@ The view matrix transforms the scene from scene coordinates into the cameras coo
 | *Camera position* | _cp_ | Position of camera in scene. | `#!cpp ColVector<T,3>` |
 
 ### Perspective Transformations
-#### Orthographic
+#### Orthographic (`mat::ortho`)
 TODO
-#### Perspective
+#### Perspective (`mat::perspective`)
 TODO
 
 
