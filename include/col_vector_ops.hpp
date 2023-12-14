@@ -3,6 +3,7 @@
 
 #include "class_forward_declaration.hpp"
 
+// Indexing operator
 template <typename Type, int Size>
 inline Type& ColVector<Type, Size>::operator[](unsigned int index){
     return this->data[index];
@@ -32,7 +33,7 @@ ColVector<Type, Size> operator+(const Matrix<Type, Size, 1>& target) {
 // Binary Operators 
 //
 
-// [(Square)Matrix op ColVector]
+// (Square)Matrix * ColVector
 template <typename Type, int Size>
 ColVector<Type, Size> operator*(const Matrix<Type, Size, Size>& lhs, const Matrix<Type, Size, 1>& rhs) {
     ColVector<Type, Size> result {};
