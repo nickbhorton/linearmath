@@ -7,7 +7,7 @@ Linear math is an intuitive header only library for matrix and vector math neede
 
 [Getting started](#getting-started) •
 [Installation](#installation) •
-[Graphics Specific Functions](#graphic-specific-functions) •
+[Useful Graphics Functions](#common-graphics-specific-functions) •
 
 </div>
 
