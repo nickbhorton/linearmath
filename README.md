@@ -32,8 +32,10 @@ git clone "https://github.com/nickbhorton/linearmath.git"
 ```
 
 ## Graphics Specific Functions
-### View
-The view matrix shift verticies into the cameras corrdinates. 
+### Object Transformation
+#### Model
+#### View (`mat::view`)
+The view matrix transforms the scene from scene coordinates into the cameras coordinates. After a model transformation an object is defined relative scene corrdinates. The camera has some orientation with respect to scene corrdinates, ie the camera is located somewhere and has a viewing direction (this direction defines a new axis system). The matrix below is defines the view transformation.
 ```math
   \begin{bmatrix}
   cr_{x} && cr_{y} && cr_{z} && -\vec{cp} \cdot \vec{cr} \\
@@ -44,12 +46,14 @@ The view matrix shift verticies into the cameras corrdinates.
 ```
 | Parameter name | Matrix name | Description | Type |
 | :-- | -- | -- | -: |
-| *Camera right* | _cr_ | Unit vector defining right from the camera view direction. | `ColVector<T, 3, 3>` |
-| *Camera up* | _cu_ | Unit vector defining up from the camera view direction. | `ColVector<T, 3, 3>` |
-| *Camera behind* | _cb_ | Negitive camera view direction. | `ColVector<T, 3, 3>` |
-| *Camera position* | _cp_ | Position of camera in scene. | `ColVector<T, 3, 3>` |
+| *Camera right* | _cr_ | Unit vector defining right from the camera view direction. | `ColVector<T,3>` |
+| *Camera up* | _cu_ | Unit vector defining up from the camera view direction. | `ColVector<T,3>` |
+| *Camera behind* | _cb_ | Negitive camera view direction. | `ColVector<T,3>` |
+| *Camera position* | _cp_ | Position of camera in scene. | `ColVector<T,3>` |
 
-
+### Perspective Transformations
+#### Orthigraphic
+#### Perspective
 
 
 [cpp-badge]: https://img.shields.io/badge/C%2B%2B-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white
