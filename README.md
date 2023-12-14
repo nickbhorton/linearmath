@@ -32,22 +32,24 @@ git clone "https://github.com/nickbhorton/linearmath.git"
 ```
 
 ## Graphics Specific Functions
-<details>
-  <summary>View</summary>
+### View
+The view matrix shift verticies into the cameras corrdinates. 
 ```math
   \begin{bmatrix}
-  x_{x}^{'} && x_{y}^{'} && x_{z}^{'} && -\vec{p} \cdot \vec{x^{'}} \\
-  y_{x}^{'} && y_{y}^{'} && y_{z}^{'} && -\vec{p} \cdot \vec{y^{'}} \\
-  z_{x}^{'} && z_{y}^{'} && z_{z}^{'} && -\vec{p} \cdot \vec{z^{'}} \\
+  cr_{x} && cr_{y} && cr_{z} && -\vec{cp} \cdot \vec{cr} \\
+  cu_{x} && cu_{y} && cu_{z} && -\vec{cp} \cdot \vec{cu} \\
+  cb_{x} && cb_{y} && cb_{z} && -\vec{cp} \cdot \vec{cb} \\
   0 && 0 && 0 && 1
   \end{bmatrix}
 ```
-</details>
-<details>
-  <summary>Orthographic</summary>
-</details>
-<details>
-  <summary>Perspective</summary>
-</details>
+| Parameter name | Matrix name | Description | Type |
+| :-- | -- | -- | -: |
+| *Camera right* | _cr_ | Unit vector defining right from the camera view direction. | `ColVector<T, 3, 3>` |
+| *Camera up* | _cu_ | Unit vector defining up from the camera view direction. | `ColVector<T, 3, 3>` |
+| *Camera behind* | _cb_ | Negitive camera view direction. | `ColVector<T, 3, 3>` |
+| *Camera position* | _cp_ | Position of camera in scene. | `ColVector<T, 3, 3>` |
+
+
+
 
 [cpp-badge]: https://img.shields.io/badge/C%2B%2B-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white
