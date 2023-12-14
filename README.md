@@ -34,14 +34,14 @@ git clone "https://github.com/nickbhorton/linearmath.git"
 ## Graphics Specific Functions
 <details>
   <summary>View</summary>
-  $$
+```math
   \begin{bmatrix}
   x_{x}^{'} && x_{y}^{'} && x_{z}^{'} && -\vec{p} \cdot \vec{x^{'}} \\
   y_{x}^{'} && y_{y}^{'} && y_{z}^{'} && -\vec{p} \cdot \vec{y^{'}} \\
   z_{x}^{'} && z_{y}^{'} && z_{z}^{'} && -\vec{p} \cdot \vec{z^{'}} \\
   0 && 0 && 0 && 1
   \end{bmatrix}
-  $$ 
+```
 </details>
 <details>
   <summary>Orthographic</summary>
