@@ -1,7 +1,7 @@
 <div align="center">
   
 # Nicks Linear Math Library (NLML)
-![image]([{BadgeURLHere}](https://img.shields.io/badge/C%2B%2B-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white))
+[![cpp][cpp-badge]]
 
 Linear math is an intuitive header only library for matrix and vector math needed for graphics programming. It provides 1 primary class, the matrix class, and two derivitive classes, column vector, and row vector. 
 
@@ -41,3 +41,5 @@ git clone "https://github.com/nickbhorton/linearmath.git"
 <details>
   <summary>Perspective</summary>
 </details>
+
+[cpp-badge]: https://img.shields.io/badge/C%2B%2B-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white
