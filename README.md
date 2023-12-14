@@ -1,7 +1,7 @@
 <div align="center">
   
 # Nicks Linear Math Library (NLML)
-[![cpp][cpp-badge]]
+![cpp][cpp-badge]
 
 Linear math is an intuitive header only library for matrix and vector math needed for graphics programming. It provides 1 primary class, the matrix class, and two derivitive classes, column vector, and row vector. 
 
