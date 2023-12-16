@@ -92,9 +92,45 @@ typedef ColVector<float, 2> vec2f;
 typedef ColVector<float, 3> vec3f;
 typedef ColVector<float, 4> vec4f;
 
+typedef ColVector<double, 2> vec2d;
+typedef ColVector<double, 3> vec3d;
+typedef ColVector<double, 4> vec4d;
+
 typedef ColVector<int, 2> vec2i;
 typedef ColVector<int, 3> vec3i;
 typedef ColVector<int, 4> vec4i;
+
+typedef ColVector<uint8_t, 2> vec2u8;
+typedef ColVector<uint8_t, 3> vec3u8;
+typedef ColVector<uint8_t, 4> vec4u8;
+
+typedef ColVector<uint16_t, 2> vec2u16;
+typedef ColVector<uint16_t, 3> vec3u16;
+typedef ColVector<uint16_t, 4> vec4u16;
+
+typedef ColVector<uint32_t, 2> vec2u32;
+typedef ColVector<uint32_t, 3> vec3u32;
+typedef ColVector<uint32_t, 4> vec4u32;
+
+typedef ColVector<uint64_t, 2> vec2u64;
+typedef ColVector<uint64_t, 3> vec3u64;
+typedef ColVector<uint64_t, 4> vec4u64;
+
+typedef ColVector<int8_t, 2> vec2i8;
+typedef ColVector<int8_t, 3> vec3i8;
+typedef ColVector<int8_t, 4> vec4i8;
+
+typedef ColVector<int16_t, 2> vec2i16;
+typedef ColVector<int16_t, 3> vec3i16;
+typedef ColVector<int16_t, 4> vec4i16;
+
+typedef ColVector<int32_t, 2> vec2i32;
+typedef ColVector<int32_t, 3> vec3i32;
+typedef ColVector<int32_t, 4> vec4i32;
+
+typedef ColVector<int64_t, 2> vec2i64;
+typedef ColVector<int64_t, 3> vec3i64;
+typedef ColVector<int64_t, 4> vec4i64;
 
 typedef RowVector<float, 2> rvec2f;
 typedef RowVector<float, 3> rvec3f;

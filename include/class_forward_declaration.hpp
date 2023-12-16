@@ -5,6 +5,7 @@
 #include <array>
 #include <initializer_list>
 #include <iomanip>
+#include <cstdint>
 
 template<typename Type, int Rows, int Cols> class Matrix;
 template<typename Type, int Size> class ColVector;
