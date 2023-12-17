@@ -12,12 +12,11 @@ template<typename Type, int Rows, int Cols>
 class Matrix {
     public:
     Matrix<Type, Rows, Cols>();
-    Matrix<Type, Rows, Cols>(std::array<Type, Rows * Cols>  data);
 
-    Matrix<Type, Rows, Cols> identity() const;
     Matrix<Type, Cols, Rows> transpose() const;
     Matrix<Type, Rows - 1, Cols - 1> minor(int i, int j) const;
     Type det() const;
+
     RowVector<Type, Cols> row (unsigned int i);
     ColVector<Type, Rows> col (unsigned int i);
 
@@ -35,58 +34,63 @@ class Matrix {
     std::array<Type, Rows * Cols> data;
 }; // class Matrix
 
-#include "matrix_ops.hpp"
+#include "matrix_operators.hpp"
 #include "matrix_functions.hpp"
-
-// ColVector Class
-template<typename Type, int Size>
-class ColVector : public Matrix<Type, Size, 1> {
-public:
-    ColVector<Type, Size> operator*=(const Type& other);
-    ColVector<Type, Size> operator+=(const ColVector<Type, Size>& other);
-    ColVector<Type, Size> operator-=(const ColVector<Type, Size>& other);
-
-    ColVector<Type, Size + 1> promote(Type new_val) const; 
-    ColVector<Type, Size - 1> demote() const; 
-    Type& operator[](unsigned int index);
-
-    void set(int pos, Type value);
-    Type get(int pos) const;
-};
-
-#include "col_vector_ops.hpp"
-#include "col_vector_functions.hpp"
-
-// RowVector Class
-template<typename Type, int Size>
-class RowVector : public Matrix<Type, 1, Size> {
-public:
-    RowVector<Type, Size> operator*=(const Type& other);
-    RowVector<Type, Size> operator+=(const RowVector<Type, Size>& other);
-    RowVector<Type, Size> operator-=(const RowVector<Type, Size>& other);
-
-    RowVector<Type, Size + 1> promote(Type new_val) const;
-    RowVector<Type, Size - 1> demote() const; 
-    Type& operator[](unsigned int index);
-
-    void set(int pos, Type value);
-    Type get(int pos) const;
-};
-
-#include "row_vector_ops.hpp"
-#include "row_vector_functions.hpp"
+#include "column_vector.hpp"
+#include "row_vector.hpp"
 
 #include "graphics_functions.hpp"
 
-// Understandable type aliases
+// type aliases
+
+// Matrix aliases
 
 typedef Matrix<float, 2, 2> mat2f;
 typedef Matrix<float, 3, 3> mat3f;
 typedef Matrix<float, 4, 4> mat4f;
 
+typedef Matrix<double, 2, 2> mat2d;
+typedef Matrix<double, 3, 3> mat3d;
+typedef Matrix<double, 4, 4> mat4d;
+
 typedef Matrix<int, 2, 2> mat2i;
 typedef Matrix<int, 3, 3> mat3i;
 typedef Matrix<int, 4, 4> mat4i;
+
+typedef Matrix<uint8_t, 2, 2> mat2u8;
+typedef Matrix<uint8_t, 3, 3> mat3u8;
+typedef Matrix<uint8_t, 4, 4> mat4u8;
+
+typedef Matrix<uint16_t, 2, 2> mat2u16;
+typedef Matrix<uint16_t, 3, 3> mat3u16;
+typedef Matrix<uint16_t, 4, 4> mat4u16;
+
+typedef Matrix<uint32_t, 2, 2> mat2u32;
+typedef Matrix<uint32_t, 3, 3> mat3u32;
+typedef Matrix<uint32_t, 4, 4> mat4u32;
+
+typedef Matrix<uint64_t, 2, 2> mat2u64;
+typedef Matrix<uint64_t, 3, 3> mat3u64;
+typedef Matrix<uint64_t, 4, 4> mat4u64;
+
+typedef Matrix<int8_t, 2, 2> mat2i8;
+typedef Matrix<int8_t, 3, 3> mat3i8;
+typedef Matrix<int8_t, 4, 4> mat4i8;
+
+typedef Matrix<int16_t, 2, 2> mat2i16;
+typedef Matrix<int16_t, 3, 3> mat3i16;
+typedef Matrix<int16_t, 4, 4> mat4i16;
+
+typedef Matrix<int32_t, 2, 2> mat2i32;
+typedef Matrix<int32_t, 3, 3> mat3i32;
+typedef Matrix<int32_t, 4, 4> mat4i32;
+
+typedef Matrix<int64_t, 2, 2> mat2i64;
+typedef Matrix<int64_t, 3, 3> mat3i64;
+typedef Matrix<int64_t, 4, 4> mat4i64;
+
+
+// ColVector aliases
 
 typedef ColVector<float, 2> vec2f;
 typedef ColVector<float, 3> vec3f;
@@ -132,13 +136,51 @@ typedef ColVector<int64_t, 2> vec2i64;
 typedef ColVector<int64_t, 3> vec3i64;
 typedef ColVector<int64_t, 4> vec4i64;
 
+// RowVector aliases
+
 typedef RowVector<float, 2> rvec2f;
 typedef RowVector<float, 3> rvec3f;
 typedef RowVector<float, 4> rvec4f;
 
+typedef RowVector<double, 2> rvec2d;
+typedef RowVector<double, 3> rvec3d;
+typedef RowVector<double, 4> rvec4d;
+
 typedef RowVector<int, 2> rvec2i;
 typedef RowVector<int, 3> rvec3i;
 typedef RowVector<int, 4> rvec4i;
+
+typedef RowVector<uint8_t, 2> rvec2u8;
+typedef RowVector<uint8_t, 3> rvec3u8;
+typedef RowVector<uint8_t, 4> rvec4u8;
+
+typedef RowVector<uint16_t, 2> rvec2u16;
+typedef RowVector<uint16_t, 3> rvec3u16;
+typedef RowVector<uint16_t, 4> rvec4u16;
+
+typedef RowVector<uint32_t, 2> rvec2u32;
+typedef RowVector<uint32_t, 3> rvec3u32;
+typedef RowVector<uint32_t, 4> rvec4u32;
+
+typedef RowVector<uint64_t, 2> rvec2u64;
+typedef RowVector<uint64_t, 3> rvec3u64;
+typedef RowVector<uint64_t, 4> rvec4u64;
+
+typedef RowVector<int8_t, 2> rvec2i8;
+typedef RowVector<int8_t, 3> rvec3i8;
+typedef RowVector<int8_t, 4> rvec4i8;
+
+typedef RowVector<int16_t, 2> rvec2i16;
+typedef RowVector<int16_t, 3> rvec3i16;
+typedef RowVector<int16_t, 4> rvec4i16;
+
+typedef RowVector<int32_t, 2> rvec2i32;
+typedef RowVector<int32_t, 3> rvec3i32;
+typedef RowVector<int32_t, 4> rvec4i32;
+
+typedef RowVector<int64_t, 2> rvec2i64;
+typedef RowVector<int64_t, 3> rvec3i64;
+typedef RowVector<int64_t, 4> rvec4i64;
 
 #endif
 

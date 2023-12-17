@@ -36,21 +36,6 @@ inline RowVector<Type, Cols> Matrix<Type, Rows, Cols>::row(unsigned int i)
 }
 
 template <typename Type, int Rows, int Cols>
-inline Matrix<Type, Rows, Cols> Matrix<Type, Rows, Cols>::identity() const
-{
-    Matrix<Type, Rows, Cols> m {};
-    for (unsigned int row = 0; row < Rows; row++){
-        for (unsigned int col = 0; col < Cols; col++){
-            if (row == col)
-            {
-                m.set(row, col, 1);
-            }
-        }
-    }
-    return m;
-}
-
-template <typename Type, int Rows, int Cols>
 inline Matrix<Type, Cols, Rows> Matrix<Type, Rows, Cols>::transpose() const
 {
     Matrix<Type, Cols, Rows> result{};
