@@ -17,5 +17,3 @@ if(PACKAGE_TESTS)
     include(GoogleTest)
     add_subdirectory(tests)
 endif()
-
-add_subdirectory(src)
