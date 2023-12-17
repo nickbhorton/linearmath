@@ -142,7 +142,7 @@ template <int Rows, int Cols>
 std::ostream& operator<<(std::ostream& os, const Matrix<float, Rows, Cols>& m){
     for (int i = 0; i < Rows; i++) {
         for (int j = 0; j < Cols; j++){
-            os << std::left << std::setw(10) << std::setprecision(3) << m.get(i, j) << " ";
+            os << std::left << std::setw(10) << std::setprecision(5) << m.get(i, j) << " ";
         }
         if (i != Rows - 1){
             os << "\n";
