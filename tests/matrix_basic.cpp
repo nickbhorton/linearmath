@@ -7,7 +7,7 @@
 
 TEST(MATRIX_BASIC, identity_constructor) {
     mat2f m2x2 {};
-    m2x2 = m2x2.identity();
+    m2x2 = mat::identity<float, 2, 2>();
     for (int i = 0; i < m2x2.rows(); i++){
         for (int j = 0; j < m2x2.cols(); j++){
             if (i == j){
@@ -17,7 +17,7 @@ TEST(MATRIX_BASIC, identity_constructor) {
     }
 
     mat3f m3x3 {};
-    m3x3 = m3x3.identity();
+    m3x3 = mat::identity<float, 3, 3>();
     for (int i = 0; i < m3x3.rows(); i++){
         for (int j = 0; j < m3x3.cols(); j++){
             if (i == j){
@@ -27,7 +27,7 @@ TEST(MATRIX_BASIC, identity_constructor) {
     }
 
     Matrix<int, 301, 147> m301x147 {};
-    m301x147 = m301x147.identity();
+    m301x147 = mat::identity<int, 301, 147>();
     for (int i = 0; i < m301x147.rows(); i++){
         for (int j = 0; j < m301x147.cols(); j++){
             if (i == j){
@@ -37,7 +37,7 @@ TEST(MATRIX_BASIC, identity_constructor) {
     }
 
     Matrix<int, 147, 301> m147x301 {};
-    m147x301 = m147x301.identity();
+    m147x301 = mat::identity<int, 147, 301>(1);
     for (int i = 0; i < m147x301.rows(); i++){
         for (int j = 0; j < m147x301.cols(); j++){
             if (i == j){
