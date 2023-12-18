@@ -26,7 +26,7 @@ ColVector<Type, Size> operator-(const Matrix<Type, Size, 1>& target) {
 // Unary plus
 template <typename Type, int Size>
 ColVector<Type, Size> operator+(const Matrix<Type, Size, 1>& target) {
-    return target;
+    return target.col(0);
 }
 
 //
@@ -87,6 +87,16 @@ ColVector<Type, Size> operator*(const Matrix<Type, Size, 1>& lhs, const Type& rh
     return result;
 }
 
+// Scalar division RHS
+template <typename Type, int Size>
+ColVector<Type, Size> operator/(const Matrix<Type, Size, 1>& lhs, const Type& rhs) {
+    ColVector<Type, Size> result {};
+    for (int i = 0; i < Size; i++){
+        result.set(i, lhs.get(i, 0) / rhs);
+    }
+    return result;
+}
+
 //
 // Assignment operators
 //
@@ -96,6 +106,14 @@ template<typename Type, int Size>
 inline ColVector<Type,Size> ColVector<Type, Size>::operator*=(const Type & other)
 {
     *this = *this * other;
+    return *this;
+}
+
+// Scalar division assignment
+template<typename Type, int Size>
+inline ColVector<Type,Size> ColVector<Type, Size>::operator/=(const Type & other)
+{
+    *this = *this / other;
     return *this;
 }
 

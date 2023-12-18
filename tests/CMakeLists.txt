@@ -31,5 +31,6 @@ macro(package_add_test TESTNAME)
 endmacro()
 
 package_add_test(matrix_basic matrix_basic.cpp)
-package_add_test(vector_basic vector_basic.cpp)
+package_add_test(col_vector_basic col_vector_basic.cpp)
+package_add_test(row_vector_basic row_vector_basic.cpp)
 package_add_test(unfiled unfiled.cpp)

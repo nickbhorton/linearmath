@@ -17,8 +17,8 @@ class Matrix {
     Matrix<Type, Rows - 1, Cols - 1> minor(int i, int j) const;
     Type det() const;
 
-    RowVector<Type, Cols> row (unsigned int i);
-    ColVector<Type, Rows> col (unsigned int i);
+    RowVector<Type, Cols> row (unsigned int i) const;
+    ColVector<Type, Rows> col (unsigned int i) const;
 
     Matrix<Type, Rows, Cols> operator+=(const Matrix<Type, Rows, Cols>& other);
     Matrix<Type, Rows, Cols> operator-=(const Matrix<Type, Rows, Cols>& other);
@@ -33,6 +33,25 @@ class Matrix {
 
     std::array<Type, Rows * Cols> data;
 }; // class Matrix
+
+template <typename Type, int RowsLHS, int RowsRHSColsLHS, int ColsRHS>
+Matrix<Type, RowsLHS, ColsRHS> operator*(const Matrix<Type, RowsLHS, RowsRHSColsLHS>& lhs, const Matrix<Type, RowsRHSColsLHS, ColsRHS>& rhs);
+template <typename Type, int Rows, int Cols>
+Matrix<Type, Rows, Cols> operator*(const Type lhs, const Matrix<Type, Rows, Cols>& rhs);
+template <typename Type, int Rows, int Cols>
+Matrix<Type, Rows, Cols> operator*(const Matrix<Type, Rows, Cols>& lhs, const Type rhs);
+template <typename Type, int Rows, int Cols>
+Matrix<Type, Rows, Cols> operator/(const Matrix<Type, Rows, Cols>& lhs, const Type rhs);
+template <typename Type, int Rows, int Cols>
+Matrix<Type, Rows, Cols> operator+(const Matrix<Type, Rows, Cols>& lhs, const Matrix<Type, Rows, Cols>& rhs);
+template <typename Type, int Rows, int Cols>
+Matrix<Type, Rows, Cols> operator-(const Matrix<Type, Rows, Cols>& lhs, const Matrix<Type, Rows, Cols>& rhs);
+template <typename Type, int Rows, int Cols>
+Matrix<Type, Rows, Cols> operator-(const Matrix<Type, Rows, Cols>& target);
+template <typename Type, int Rows, int Cols>
+bool operator==(const Matrix<Type, Rows, Cols>& lhs, const Matrix<Type, Rows, Cols>& rhs);
+template <typename Type, int Rows, int Cols>
+bool operator!=(const Matrix<Type, Rows, Cols>& lhs, const Matrix<Type, Rows, Cols>& rhs);
 
 #include "matrix_operators.hpp"
 #include "matrix_functions.hpp"

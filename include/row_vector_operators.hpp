@@ -26,7 +26,7 @@ RowVector<Type, Size> operator-(const Matrix<Type, 1, Size>& target) {
 // Unary plus
 template <typename Type, int Size>
 RowVector<Type, Size> operator+(const Matrix<Type, 1, Size>& target) {
-    return target;
+    return target.row(0);
 }
 
 //
@@ -87,6 +87,15 @@ RowVector<Type, Size> operator*(const Matrix<Type, 1, Size>& lhs, const Type& rh
     return result;
 }
 
+template <typename Type, int Size>
+RowVector<Type, Size> operator/(const Matrix<Type, 1, Size>& lhs, const Type& rhs) {
+    RowVector<Type, Size> result {};
+    for (int i = 0; i < Size; i++){
+        result.set(i, lhs.get(0, i) / rhs);
+    }
+    return result;
+}
+
 //
 // Assignment operators
 //
@@ -96,6 +105,14 @@ template<typename Type, int Size>
 inline RowVector<Type,Size> RowVector<Type, Size>::operator*=(const Type & other)
 {
     *this = *this * other;
+    return *this;
+}
+
+// Scalar division assignment
+template<typename Type, int Size>
+inline RowVector<Type,Size> RowVector<Type, Size>::operator/=(const Type & other)
+{
+    *this = *this / other;
     return *this;
 }
 

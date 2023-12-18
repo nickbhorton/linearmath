@@ -16,7 +16,7 @@ inline Matrix<Type, Rows, Cols>::Matrix()
 // Member Functions
 
 template <typename Type, int Rows, int Cols>
-inline ColVector<Type, Rows> Matrix<Type, Rows, Cols>::col(unsigned int i)
+inline ColVector<Type, Rows> Matrix<Type, Rows, Cols>::col(unsigned int i) const
 {
     ColVector<Type, Rows> result {};
     for (int index = 0; index < Rows; index++) {
@@ -26,7 +26,7 @@ inline ColVector<Type, Rows> Matrix<Type, Rows, Cols>::col(unsigned int i)
 }
 
 template <typename Type, int Rows, int Cols>
-inline RowVector<Type, Cols> Matrix<Type, Rows, Cols>::row(unsigned int i)
+inline RowVector<Type, Cols> Matrix<Type, Rows, Cols>::row(unsigned int i) const
 {
     RowVector<Type, Cols> result {};
     for (int index = 0; index < Cols; index++) {
@@ -200,6 +200,53 @@ namespace mat{
         m.set(1, 3, v4.get(1, 0));
         m.set(2, 3, v4.get(2, 0));
         m.set(3, 3, v4.get(3, 0));
+        return m;
+    }
+
+    template <typename Type>
+    inline Matrix<Type, 2, 2> create(const Matrix<Type, 1, 2>& v1, const Matrix<Type, 1, 2>& v2) {
+        Matrix<Type, 2, 2> m {};
+        m.set(0, 0, v1.get(0, 0));
+        m.set(1, 0, v1.get(0, 1));
+        m.set(0, 1, v2.get(0, 0));
+        m.set(1, 1, v2.get(0, 1));
+        return m;
+    }
+
+    template <typename Type>
+    inline Matrix<Type, 3, 3> create(const Matrix<Type, 1, 3>& v1, const Matrix<Type, 1, 3>& v2, const Matrix<Type, 1, 3>& v3) {
+        Matrix<Type, 3, 3> m {};
+        m.set(0, 0, v1.get(0, 0));
+        m.set(1, 0, v1.get(0, 1));
+        m.set(2, 0, v1.get(0, 2));
+        m.set(0, 1, v2.get(0, 0));
+        m.set(1, 1, v2.get(0, 1));
+        m.set(2, 1, v2.get(0, 2));
+        m.set(0, 2, v3.get(0, 0));
+        m.set(1, 2, v3.get(0, 1));
+        m.set(2, 2, v3.get(0, 2));
+        return m;
+    }
+
+    template <typename Type>
+    inline Matrix<Type, 4, 4> create(const Matrix<Type, 1, 4>& v1, const Matrix<Type, 1, 4>& v2, const Matrix<Type, 1, 4>& v3, const Matrix<Type, 1, 4>& v4) {
+        Matrix<Type, 4, 4> m {};
+        m.set(0, 0, v1.get(0, 0));
+        m.set(1, 0, v1.get(0, 1));
+        m.set(2, 0, v1.get(0, 2));
+        m.set(3, 0, v1.get(0, 3));
+        m.set(0, 1, v2.get(0, 0));
+        m.set(1, 1, v2.get(0, 1));
+        m.set(2, 1, v2.get(0, 2));
+        m.set(3, 1, v2.get(0, 3));
+        m.set(0, 2, v3.get(0, 0));
+        m.set(1, 2, v3.get(0, 1));
+        m.set(2, 2, v3.get(0, 2));
+        m.set(3, 2, v3.get(0, 3));
+        m.set(0, 3, v4.get(0, 0));
+        m.set(1, 3, v4.get(0, 1));
+        m.set(2, 3, v4.get(0, 2));
+        m.set(3, 3, v4.get(0, 3));
         return m;
     }
 }

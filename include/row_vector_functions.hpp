@@ -65,10 +65,37 @@ namespace rvec{
         return v;
     }
 
+    template <typename Type, int Size>
+    inline Type dot(const RowVector<Type, Size>& lhs, const RowVector<Type, Size>& rhs)
+    {
+        auto result = lhs * rhs.transpose();
+        return result.get(0, 0);
+    }
+
+    template <typename Type>
+    inline RowVector<Type, 3> cross(const RowVector<Type, 3>& lhs, const RowVector<Type, 3>& rhs)
+    {
+        return rvec::create(
+            lhs.get(1) * rhs.get(2) - lhs.get(2) * rhs.get(1),
+          - lhs.get(0) * rhs.get(2) + lhs.get(2) * rhs.get(0),
+            lhs.get(0) * rhs.get(1) - lhs.get(1) * rhs.get(0)
+        );
+    }
+
+    template <typename Type, int Size>
+    inline float length(const RowVector<Type, Size>& target)
+    {
+        Type sum = (Type) 0;
+        for (int i = 0; i < Size; i++){
+            sum += std::pow(target.get(i), 2);
+        }
+        return std::sqrt(sum);
+    }
+
     template <int Size>
     inline RowVector<float, Size> normalize(const RowVector<float, Size>& target)
     {
-        float len = vec::length(target);
+        float len = rvec::length(target);
         if (len == 0.0f){
             return RowVector<float, Size>{};
         }
