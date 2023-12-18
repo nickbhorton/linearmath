@@ -88,6 +88,17 @@ TEST(COL_VECTOR_OPS, scalar_div_assignment){
     EXPECT_EQ(x[1], 1);
 }
 
+TEST(COL_VECTOR_OPS, equality){
+    vec4i x = vec::create(1, 2, 3, 4);
+    EXPECT_TRUE(x == x);
+}
+
+TEST(COL_VECTOR_OPS, non_equality){
+    vec4i x = vec::create(1, 2, 3, 4);
+    vec4i y = vec::create(3, 2, 3, 4);
+    EXPECT_TRUE(x != y);
+}
+
 
 TEST(COL_VECTOR_OPS, vec_mat_mult){
     mat2i m {};
@@ -123,6 +134,13 @@ TEST(COL_VECTOR_OPS, index_mutate){
     EXPECT_EQ(x[1], 2);
     EXPECT_EQ(x[2], 3);
     EXPECT_EQ(x[3], 4);
+}
+
+TEST(COL_VECTOR_OPS, ostream_operator){
+    vec4i x = vec::create(1, 2, 3, 4);
+    std::stringstream ss;
+    ss << x;
+    EXPECT_EQ(ss.str(), "(1, 2, 3, 4)");
 }
 
 TEST(COL_VECTOR_OPS, dot_product_simple) {

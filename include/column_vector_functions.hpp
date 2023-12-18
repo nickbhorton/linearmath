@@ -3,6 +3,8 @@
 
 #include "class_forward_declaration.hpp"
 
+// members
+
 template <typename Type, int Size>
 inline void ColVector<Type, Size>::set(int pos, Type value) {
    Matrix<Type, Size, 1>::set(pos, 0, value);

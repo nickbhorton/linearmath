@@ -1,7 +1,6 @@
 #ifndef COLUMN_VECTOR_HEADER
 #define COLUMN_VECTOR_HEADER
 
-// ColVector Class
 template<typename Type, int Size>
 class ColVector : public Matrix<Type, Size, 1> {
 public:
@@ -16,23 +15,9 @@ public:
 
     void set(int pos, Type value);
     Type get(int pos) const;
-};
+}; // ColVector
 
-template<typename Type>
-class ColVector<Type, 3> {
-public:
-    Type& x() {
-        return data[0];
-    }
-    Type& y() {
-        return data[0];
-    }
-    Type& z() {
-        return data[0];
-    }
-};
-
-// Binary
+// binary
 template <typename Type, int Size>
 ColVector<Type, Size> operator*(const Matrix<Type, Size, Size>& lhs, const Matrix<Type, Size, 1>& rhs);
 template <typename Type, int Size>
@@ -49,7 +34,7 @@ template <typename Type, int Size>
 bool operator==(const ColVector<Type, Size>& lhs, const ColVector<Type, Size>& rhs);
 template <typename Type, int Size>
 bool operator!=(const ColVector<Type, Size>& lhs, const ColVector<Type, Size>& rhs);
-// Unary
+// unary
 template <typename Type, int Size>
 ColVector<Type, Size> operator-(const Matrix<Type, Size, 1>& target);
 template <typename Type, int Size>

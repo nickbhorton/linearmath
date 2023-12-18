@@ -3,17 +3,13 @@
 
 #include "class_forward_declaration.hpp"
 
-// Indexing operator
 template <typename Type, int Size>
 inline Type& ColVector<Type, Size>::operator[](unsigned int index){
     return this->data[index];
 }
 
-//
-// Unary operators
-//
+// unary 
 
-// Unary minus
 template <typename Type, int Size>
 ColVector<Type, Size> operator-(const Matrix<Type, Size, 1>& target) {
     ColVector<Type, Size> result {};
@@ -23,7 +19,6 @@ ColVector<Type, Size> operator-(const Matrix<Type, Size, 1>& target) {
     return result;
 }
 
-// Unary plus
 template <typename Type, int Size>
 ColVector<Type, Size> operator+(const Matrix<Type, Size, 1>& target) {
     return target.col(0);
@@ -33,17 +28,14 @@ template <typename Type, int Size>
 std::ostream& operator<<(std::ostream& os, const ColVector<Type, Size>& target){
     os << "(";
     for (int i = 0; i < Size - 1; i++){
-        os << target.get(i); << ", ";
+        os << target.get(i) << ", ";
     }
-    os << target.get(Size - 1); << ")";
+    os << target.get(Size - 1) << ")";
     return os;
 }
 
-//
-// Binary Operators 
-//
+// binary 
 
-// (Square)Matrix * ColVector
 template <typename Type, int Size>
 ColVector<Type, Size> operator*(const Matrix<Type, Size, Size>& lhs, const Matrix<Type, Size, 1>& rhs) {
     ColVector<Type, Size> result {};
@@ -57,7 +49,6 @@ ColVector<Type, Size> operator*(const Matrix<Type, Size, Size>& lhs, const Matri
     return result;
 }
 
-// Binary plus
 template <typename Type, int Size>
 ColVector<Type, Size> operator-(const Matrix<Type, Size, 1>& lhs, const Matrix<Type, Size, 1>& rhs) {
     ColVector<Type, Size> result {};
@@ -67,7 +58,6 @@ ColVector<Type, Size> operator-(const Matrix<Type, Size, 1>& lhs, const Matrix<T
     return result;
 }
 
-// Binary minus
 template <typename Type, int Size>
 ColVector<Type, Size> operator+(const Matrix<Type, Size, 1>& lhs, const Matrix<Type, Size, 1>& rhs) {
     ColVector<Type, Size> result {};
@@ -77,7 +67,6 @@ ColVector<Type, Size> operator+(const Matrix<Type, Size, 1>& lhs, const Matrix<T
     return result;
 }
 
-// Scalar multiplication LHS
 template <typename Type, int Size>
 ColVector<Type, Size> operator*(const Type& lhs, const Matrix<Type, Size, 1>& rhs) {
     ColVector<Type, Size> result {};
@@ -87,7 +76,6 @@ ColVector<Type, Size> operator*(const Type& lhs, const Matrix<Type, Size, 1>& rh
     return result;
 }
 
-// Scalar multiplication RHS
 template <typename Type, int Size>
 ColVector<Type, Size> operator*(const Matrix<Type, Size, 1>& lhs, const Type& rhs) {
     ColVector<Type, Size> result {};
@@ -97,7 +85,6 @@ ColVector<Type, Size> operator*(const Matrix<Type, Size, 1>& lhs, const Type& rh
     return result;
 }
 
-// Scalar division RHS
 template <typename Type, int Size>
 ColVector<Type, Size> operator/(const Matrix<Type, Size, 1>& lhs, const Type& rhs) {
     ColVector<Type, Size> result {};
@@ -110,7 +97,7 @@ ColVector<Type, Size> operator/(const Matrix<Type, Size, 1>& lhs, const Type& rh
 template <typename Type, int Size>
 bool operator==(const ColVector<Type, Size>& lhs, const ColVector<Type, Size>& rhs) {
     for (int i = 0; i < Size; i++){
-        if lhs[i] != rhs[i]{
+        if (lhs.get(i) != rhs.get(i)) {
             return false;
         }
     }
@@ -119,18 +106,15 @@ bool operator==(const ColVector<Type, Size>& lhs, const ColVector<Type, Size>& r
 template <typename Type, int Size>
 bool operator!=(const ColVector<Type, Size>& lhs, ColVector<Type, Size>& rhs) {
     for (int i = 0; i < Size; i++){
-        if lhs[i] != rhs[i]{
+        if (lhs.get(i) != rhs.get(i)) {
             return true;
         }
     }
     return false;
 }
 
-//
-// Assignment operators
-//
+// assignment
 
-// Scalar multiplication assignment
 template<typename Type, int Size>
 inline ColVector<Type,Size> ColVector<Type, Size>::operator*=(const Type & other)
 {
@@ -138,7 +122,6 @@ inline ColVector<Type,Size> ColVector<Type, Size>::operator*=(const Type & other
     return *this;
 }
 
-// Scalar division assignment
 template<typename Type, int Size>
 inline ColVector<Type,Size> ColVector<Type, Size>::operator/=(const Type & other)
 {
@@ -146,7 +129,6 @@ inline ColVector<Type,Size> ColVector<Type, Size>::operator/=(const Type & other
     return *this;
 }
 
-// Addition assignment
 template<typename Type, int Size>
 inline ColVector<Type,Size> ColVector<Type, Size>::operator+=(const ColVector<Type, Size> & other)
 {
@@ -154,7 +136,6 @@ inline ColVector<Type,Size> ColVector<Type, Size>::operator+=(const ColVector<Ty
     return *this;
 }
 
-// Subtraction assignment
 template<typename Type, int Size>
 inline ColVector<Type,Size> ColVector<Type, Size>::operator-=(const ColVector<Type, Size> & other)
 {
