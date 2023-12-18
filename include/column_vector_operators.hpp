@@ -29,6 +29,16 @@ ColVector<Type, Size> operator+(const Matrix<Type, Size, 1>& target) {
     return target.col(0);
 }
 
+template <typename Type, int Size>
+std::ostream& operator<<(std::ostream& os, const ColVector<Type, Size>& target){
+    os << "(";
+    for (int i = 0; i < Size - 1; i++){
+        os << target.get(i); << ", ";
+    }
+    os << target.get(Size - 1); << ")";
+    return os;
+}
+
 //
 // Binary Operators 
 //
@@ -95,6 +105,25 @@ ColVector<Type, Size> operator/(const Matrix<Type, Size, 1>& lhs, const Type& rh
         result.set(i, lhs.get(i, 0) / rhs);
     }
     return result;
+}
+
+template <typename Type, int Size>
+bool operator==(const ColVector<Type, Size>& lhs, const ColVector<Type, Size>& rhs) {
+    for (int i = 0; i < Size; i++){
+        if lhs[i] != rhs[i]{
+            return false;
+        }
+    }
+    return true;
+}
+template <typename Type, int Size>
+bool operator!=(const ColVector<Type, Size>& lhs, ColVector<Type, Size>& rhs) {
+    for (int i = 0; i < Size; i++){
+        if lhs[i] != rhs[i]{
+            return true;
+        }
+    }
+    return false;
 }
 
 //

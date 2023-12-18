@@ -18,6 +18,20 @@ public:
     Type get(int pos) const;
 };
 
+template<typename Type>
+class ColVector<Type, 3> {
+public:
+    Type& x() {
+        return data[0];
+    }
+    Type& y() {
+        return data[0];
+    }
+    Type& z() {
+        return data[0];
+    }
+};
+
 // Binary
 template <typename Type, int Size>
 ColVector<Type, Size> operator*(const Matrix<Type, Size, Size>& lhs, const Matrix<Type, Size, 1>& rhs);
@@ -31,11 +45,17 @@ template <typename Type, int Size>
 ColVector<Type, Size> operator*(const Matrix<Type, Size, 1>& lhs, const Type& rhs);
 template <typename Type, int Size>
 ColVector<Type, Size> operator/(const Matrix<Type, Size, 1>& lhs, const Type& rhs);
+template <typename Type, int Size>
+bool operator==(const ColVector<Type, Size>& lhs, const ColVector<Type, Size>& rhs);
+template <typename Type, int Size>
+bool operator!=(const ColVector<Type, Size>& lhs, const ColVector<Type, Size>& rhs);
 // Unary
 template <typename Type, int Size>
 ColVector<Type, Size> operator-(const Matrix<Type, Size, 1>& target);
 template <typename Type, int Size>
 ColVector<Type, Size> operator+(const Matrix<Type, Size, 1>& target);
+template <typename Type, int Size>
+std::ostream& operator<<(std::ostream& os, const ColVector<Type, Size>& target);
 
 #include "column_vector_operators.hpp"
 #include "column_vector_functions.hpp"
