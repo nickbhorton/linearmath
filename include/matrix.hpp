@@ -11,7 +11,7 @@
 template<typename Type, int Rows, int Cols> 
 class Matrix {
     public:
-    Matrix<Type, Rows, Cols>();
+    Matrix();
 
     Matrix<Type, Cols, Rows> transpose() const;
     Matrix<Type, Rows - 1, Cols - 1> minor(int i, int j) const;
