@@ -15,6 +15,31 @@ public:
 
     void set(int pos, Type value);
     Type get(int pos) const;
+
+    constexpr Type x() const noexcept {
+        if constexpr (Size >= 1){
+            return this->data[0];
+        }
+        return (Type) 0;
+    }
+    constexpr Type y() const noexcept {
+        if constexpr (Size >= 2){
+            return this->data[1];
+        }
+        return (Type) 0;
+    }
+    constexpr Type z() const noexcept {
+        if constexpr (Size >= 3){
+            return this->data[2];
+        }
+        return (Type) 0;
+    }
+    constexpr Type w() const noexcept {
+        if constexpr (Size >= 4){
+            return this->data[3];
+        }
+        return (Type) 0;
+    }
 }; // ColVector
 
 // binary

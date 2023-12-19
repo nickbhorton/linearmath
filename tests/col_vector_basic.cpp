@@ -143,6 +143,23 @@ TEST(COL_VECTOR_OPS, ostream_operator){
     EXPECT_EQ(ss.str(), "(1, 2, 3, 4)");
 }
 
+TEST(COL_VECTOR_OPS, access){
+    vec4i x = vec::create(1, 2, 3, 4);
+    EXPECT_EQ(x.x(), 1);
+    EXPECT_EQ(x.y(), 2);
+    EXPECT_EQ(x.z(), 3);
+    EXPECT_EQ(x.w(), 4);
+}
+
+TEST(COL_VECTOR_OPS, bad_access) {
+    vec2i y = vec::create(1, 2);
+    EXPECT_EQ(y.x(), 1);
+    EXPECT_EQ(y.y(), 2);
+    EXPECT_EQ(y.z(), 0);
+    EXPECT_EQ(y.w(), 0);
+}
+
+
 TEST(COL_VECTOR_OPS, dot_product_simple) {
     vec3i v = vec::create(1, 1, 1);
     int result = vec::dot(v, v);
